@@ -1,21 +1,402 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Basim Vilayur</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basim Vilayur | Tech Notes</title>
+  <meta name="description" content="Simple modern technical blog by Basim Vilayur." />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #121a2b;
+      --panel-2: #18233a;
+      --text: #e8eefc;
+      --muted: #9fb0d1;
+      --line: #24324f;
+      --brand: #4da3ff;
+      --accent: #ff8a3d;
+      --max: 1100px;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #09101d 0%, #0b1220 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11, 18, 32, 0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand span { color: var(--brand); }
+
+    .menu {
+      display: flex;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+    }
+
+    .hero {
+      padding: 64px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+    }
+
+    .hero-copy {
+      padding: 32px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(77,163,255,0.12);
+      color: #a9d0ff;
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+      border: 1px solid rgba(77,163,255,0.24);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin: 0 0 14px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.04rem;
+      margin: 0 0 24px;
+      max-width: 58ch;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: #061120;
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line);
+    }
+
+    .hero-side {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .mini {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.98rem;
+    }
+
+    .mini span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    section {
+      padding: 18px 0 26px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .post {
+      overflow: hidden;
+    }
+
+    .post-body {
+      padding: 22px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: #ffd3b4;
+      background: rgba(255,138,61,0.12);
+      border: 1px solid rgba(255,138,61,0.22);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .post h3 {
+      margin: 0 0 8px;
+      font-size: 1.12rem;
+    }
+
+    .post p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .post-meta {
+      font-size: 0.84rem;
+      color: #88a0c6;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .about-card {
+      padding: 24px;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 28px 0 48px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .code-line {
+      font-family: Consolas, monospace;
+      background: #0a1020;
+      border: 1px solid var(--line);
+      color: #b9cdf3;
+      padding: 12px 14px;
+      border-radius: 12px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .posts,
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#">Basim<span>Tech</span></a>
+      <nav class="menu">
+        <a href="#posts">Posts</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-  <h1>🚀 Basim Vilayur</h1>
-  <p>IT Engineer | Network | Security | Automation</p>
+  <main>
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="card hero-copy">
+          <div class="eyebrow">Technical Blog • Notes • Guides</div>
+          <h1>Simple modern website for your technical posts</h1>
+          <p>
+            Share practical notes, troubleshooting guides, network setups, server lessons, and automation ideas in a clean, professional layout.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#posts">Read Posts</a>
+            <a class="btn btn-secondary" href="#about">About Me</a>
+          </div>
+        </div>
 
-  <hr>
+        <div class="card hero-side">
+          <div class="mini">
+            <strong>Topics</strong>
+            <span>Networking, servers, Odoo, Microsoft 365, security, automation</span>
+          </div>
+          <div class="mini">
+            <strong>Style</strong>
+            <span>Short technical writeups with real-world solutions and screenshots</span>
+          </div>
+          <div class="mini">
+            <strong>Quick Note</strong>
+            <span>Start simple now. Add blog pages and categories later.</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <h2>About Me</h2>
-  <p>Experienced IT professional working with networking, servers, and automation.</p>
+    <section id="posts" class="container">
+      <div class="section-title">
+        <div>
+          <h2>Latest Posts</h2>
+          <p>Edit these sample cards and replace them with your real articles.</p>
+        </div>
+      </div>
 
-  <h2>My Blog</h2>
-  <p>Coming soon...</p>
+      <div class="posts">
+        <article class="card post">
+          <div class="post-body">
+            <div class="tag">Networking</div>
+            <h3>How I segment office VLANs for better control</h3>
+            <p>A practical overview of VLAN planning, firewall rules, and keeping wireless and wired users properly separated.</p>
+            <div class="post-meta">April 2026 • 5 min read</div>
+          </div>
+        </article>
 
+        <article class="card post">
+          <div class="post-body">
+            <div class="tag">Servers</div>
+            <h3>Proxmox backup strategy that is simple and reliable</h3>
+            <p>My preferred approach for VM backup flow, restore planning, and avoiding storage mistakes before disaster happens.</p>
+            <div class="post-meta">April 2026 • 6 min read</div>
+          </div>
+        </article>
+
+        <article class="card post">
+          <div class="post-body">
+            <div class="tag">Automation</div>
+            <h3>Using n8n for internal business process automation</h3>
+            <p>Where rule-based workflows fit best, how to keep them maintainable, and what to document from day one.</p>
+            <div class="post-meta">April 2026 • 4 min read</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="container">
+      <div class="section-title">
+        <div>
+          <h2>About This Site</h2>
+          <p>Clean structure, easy to edit, and good for long-term growth.</p>
+        </div>
+      </div>
+
+      <div class="about">
+        <div class="card about-card">
+          <h3>About Me</h3>
+          <p style="color: var(--muted);">
+            I share hands-on technical notes about infrastructure, troubleshooting, firewalls, virtualization, Microsoft 365, and practical IT operations.
+          </p>
+          <div class="code-line">git commit -m "Publish new technical post"</div>
+        </div>
+
+        <div class="card about-card">
+          <h3>Best structure later</h3>
+          <ul class="list">
+            <li>Home page for highlights</li>
+            <li>Separate posts page or blog folder</li>
+            <li>One article per HTML page</li>
+            <li>Keep CSS separate when site grows</li>
+            <li>Add search or categories later</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="container footer">
+    <div class="card about-card">
+      <strong>Contact</strong><br />
+      Email: yourname@basimvilayur.com<br />
+      © 2026 Basim Vilayur • Technical Notes
+    </div>
+  </footer>
 </body>
 </html>
