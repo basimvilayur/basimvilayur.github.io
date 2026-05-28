@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basimvilayur | Technical Interviews</title>
-  <meta name="description" content="Clean technical blog layout inspired by ByteByteGo style." />
+  <title>Basim Mohammed | Technical Notes</title>
+  <meta name="description" content="Technical notes, IT guides, networking, servers, security, cloud, and interview preparation by Basim Mohammed." />
 
   <style>
     :root {
@@ -14,10 +14,12 @@
       --muted: #667085;
       --line: #e5e7eb;
       --brand: #12b76a;
+      --dark: #171717;
       --blue: #eef4ff;
       --green: #ecfdf3;
       --pink: #fff1f3;
       --yellow: #fffaeb;
+      --purple: #f7f2ff;
       --radius: 16px;
       --max: 1180px;
     }
@@ -44,51 +46,56 @@
     }
 
     .nav {
-      height: 64px;
+      min-height: 64px;
       max-width: var(--max);
       margin: auto;
-      padding: 0 22px;
+      padding: 12px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-weight: 800;
-      font-size: 1.12rem;
+      font-weight: 850;
+      font-size: 1.2rem;
+      letter-spacing: -.02em;
+      white-space: nowrap;
     }
 
-    .logo-mark {
-      width: 27px;
-      height: 27px;
-      border: 3px solid #143c2e;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      color: var(--brand);
-      font-weight: 900;
-      font-size: 14px;
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      color: #475467;
+      font-weight: 650;
+      font-size: .92rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .btn {
       border: 0;
       cursor: pointer;
       border-radius: 9px;
-      padding: 10px 18px;
-      font-weight: 700;
+      padding: 10px 16px;
+      font-weight: 750;
       font-size: .9rem;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      transition: .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      opacity: .92;
     }
 
     .btn-green {
@@ -97,9 +104,8 @@
     }
 
     .btn-dark {
-      background: #171717;
+      background: var(--dark);
       color: white;
-      padding-inline: 22px;
     }
 
     .page {
@@ -141,32 +147,64 @@
       margin-bottom: 4px;
     }
 
+    .cat:hover,
     .cat.active {
       background: #eef0f4;
       color: #101828;
       font-weight: 700;
     }
 
-    .content {
-      min-width: 0;
-    }
+    .content { min-width: 0; }
 
-    .intro {
+    .hero {
+      background: linear-gradient(120deg, #ffffff 0%, #eff8ff 48%, #f0fdf4 100%);
+      border: 1px solid #dfe7ef;
+      border-radius: 22px;
+      padding: 36px;
       margin-bottom: 26px;
+      box-shadow: 0 10px 28px rgba(16, 24, 40, .05);
     }
 
-    .intro h1 {
-      margin: 0 0 10px;
-      font-size: clamp(1.9rem, 3vw, 2.7rem);
-      line-height: 1.15;
-      letter-spacing: -.03em;
+    .eyebrow {
+      display: inline-block;
+      background: #dcfce7;
+      color: #15803d;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 850;
+      margin-bottom: 14px;
     }
 
-    .intro p {
-      margin: 0;
-      max-width: 760px;
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.1;
+      letter-spacing: -.04em;
+    }
+
+    .hero p {
+      margin: 0 0 22px;
       color: var(--muted);
-      font-size: 1rem;
+      max-width: 800px;
+      font-size: 1.03rem;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section-title h2 {
+      margin: 0 0 8px;
+      font-size: 1.65rem;
+      letter-spacing: -.02em;
+    }
+
+    .section-title p {
+      margin: 0;
+      max-width: 800px;
+      color: var(--muted);
+      font-size: .98rem;
     }
 
     .share {
@@ -179,11 +217,11 @@
     .share a {
       background: #fff;
       border: 1px solid var(--line);
-      padding: 6px 11px;
+      padding: 7px 12px;
       border-radius: 8px;
-      font-size: .82rem;
+      font-size: .84rem;
       color: #344054;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .featured {
@@ -204,7 +242,7 @@
       padding: 5px 10px;
       border-radius: 999px;
       font-size: .72rem;
-      font-weight: 800;
+      font-weight: 850;
       margin-bottom: 14px;
     }
 
@@ -214,19 +252,19 @@
     .badge.yellow { background: #fef3c7; color: #b45309; }
     .badge.purple { background: #f3e8ff; color: #7e22ce; }
 
-    .featured h2 {
+    .featured h3 {
       margin: 0 0 8px;
       font-size: 1.2rem;
     }
 
     .featured p {
-      margin: 0 0 28px;
+      margin: 0 0 20px;
       color: var(--muted);
     }
 
     .readmore {
       color: #475467;
-      font-weight: 700;
+      font-weight: 800;
       font-size: .9rem;
     }
 
@@ -250,9 +288,11 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
+      margin-top: 18px;
     }
 
-    .post {
+    .post,
+    .info-card {
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -261,10 +301,11 @@
       box-shadow: 0 8px 24px rgba(16, 24, 40, .035);
     }
 
-    .post.blue { background: linear-gradient(135deg, #fff, var(--blue)); }
-    .post.green { background: linear-gradient(135deg, #fff, var(--green)); }
-    .post.pink { background: linear-gradient(135deg, #fff, var(--pink)); }
-    .post.yellow { background: linear-gradient(135deg, #fff, var(--yellow)); }
+    .post.blue, .info-card.blue { background: linear-gradient(135deg, #fff, var(--blue)); }
+    .post.green, .info-card.green { background: linear-gradient(135deg, #fff, var(--green)); }
+    .post.pink, .info-card.pink { background: linear-gradient(135deg, #fff, var(--pink)); }
+    .post.yellow, .info-card.yellow { background: linear-gradient(135deg, #fff, var(--yellow)); }
+    .info-card.purple { background: linear-gradient(135deg, #fff, var(--purple)); }
 
     .tags {
       display: flex;
@@ -273,13 +314,15 @@
       margin-bottom: 14px;
     }
 
-    .post h3 {
+    .post h3,
+    .info-card h3 {
       margin: 0 0 8px;
       font-size: 1.08rem;
       line-height: 1.35;
     }
 
-    .post p {
+    .post p,
+    .info-card p {
       margin: 0 0 16px;
       color: var(--muted);
       font-size: .92rem;
@@ -288,43 +331,39 @@
     .date {
       color: #667085;
       font-size: .84rem;
-      font-weight: 600;
+      font-weight: 650;
     }
 
-    .newsletter {
+    .contact-box {
       margin-top: 28px;
       background: #fff;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 44px 24px;
+      padding: 38px 24px;
       text-align: center;
     }
 
-    .newsletter h2 {
+    .contact-box h2 {
       margin: 0 0 8px;
       font-size: 1.45rem;
       text-decoration: underline;
     }
 
-    .newsletter p {
-      max-width: 520px;
-      margin: 0 auto 18px;
+    .contact-box p {
+      max-width: 600px;
+      margin: 0 auto 16px;
       color: var(--muted);
     }
 
-    .email-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .email-row input {
-      width: min(360px, 100%);
+    .email-link {
+      display: inline-flex;
+      margin: 8px 0 12px;
+      background: #f9fafb;
       border: 1px solid var(--line);
       border-radius: 10px;
-      padding: 12px 14px;
-      font-size: .95rem;
+      padding: 10px 14px;
+      font-weight: 800;
+      color: #101828;
     }
 
     footer {
@@ -336,34 +375,15 @@
     }
 
     @media (max-width: 900px) {
-      .page {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: static;
-      }
-
-      .featured {
-        grid-template-columns: 1fr;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
+      .page { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .featured { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
       .nav {
-        height: auto;
-        padding-block: 14px;
         align-items: flex-start;
-        gap: 12px;
         flex-direction: column;
       }
-
-      .nav-actions {
-        width: 100%;
-        flex-wrap: wrap;
-      }
+      .nav-actions { width: 100%; }
     }
   </style>
 </head>
@@ -371,14 +391,19 @@
 <body>
   <header class="topbar">
     <div class="nav">
-      <a href="#" class="logo">
-        <span class="logo-mark">B</span>
-        BasimTechGo
-      </a>
+      <a href="#home" class="logo">Basim Mohammed</a>
+
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#technical-notes">Technical Notes</a>
+        <a href="#posts">Posts</a>
+        <a href="#pages">Pages</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
       <div class="nav-actions">
         <a class="btn btn-green" href="#posts">📖 Explore All Posts</a>
-        <a class="btn btn-dark" href="#contact">Login</a>
+        <a class="btn btn-dark" href="mailto:info@basimvilayur.com">Email Me</a>
       </div>
     </div>
   </header>
@@ -386,105 +411,227 @@
   <main class="page">
     <aside class="sidebar">
       <p class="side-title">Categories</p>
-      <a class="cat" href="#">🌐 API and Web Development</a>
-      <a class="cat" href="#">🛠 Real World Case Studies</a>
-      <a class="cat" href="#">🤖 AI and Machine Learning</a>
-      <a class="cat" href="#">🗄 Database and Storage</a>
-      <a class="cat active" href="#">🎯 Technical Interviews</a>
-      <a class="cat" href="#">⚡ Caching & Performance</a>
-      <a class="cat" href="#">💰 Payment and Fintech</a>
-      <a class="cat" href="#">🏗 Software Architecture</a>
-      <a class="cat" href="#">☁️ Cloud & Distributed Systems</a>
-      <a class="cat" href="#">🔐 Security</a>
-      <a class="cat" href="#">💻 Computer Fundamentals</a>
+      <a class="cat active" href="#home">🏠 Home</a>
+      <a class="cat" href="#networking">🌐 Networking</a>
+      <a class="cat" href="#servers">🖥 Servers & Proxmox</a>
+      <a class="cat" href="#security">🔐 Security</a>
+      <a class="cat" href="#cloud">☁️ Cloud & Microsoft 365</a>
+      <a class="cat" href="#odoo">🧩 Odoo & ERP</a>
+      <a class="cat" href="#automation">⚙️ Automation</a>
+      <a class="cat" href="#database">🗄 Database & Storage</a>
+      <a class="cat" href="#interviews">🎯 Technical Interviews</a>
+      <a class="cat" href="#contact">📩 Contact</a>
     </aside>
 
     <section class="content">
-      <div class="intro">
-        <h1>Technical Interviews</h1>
+      <section class="hero" id="home">
+        <span class="eyebrow">Technical Blog • IT Notes • Real-World Guides</span>
+        <h1>Practical technical notes by Basim Mohammed</h1>
         <p>
-          Technical interviews are a critical part of the hiring process for software engineers.
-          This page includes system design notes, coding concepts, networking basics, database topics,
-          and real-world interview preparation resources.
+          Welcome to my technical knowledge base. I share simple and practical notes about networking,
+          servers, Proxmox, firewalls, Microsoft 365, Odoo, security monitoring, cloud, automation,
+          and interview preparation.
+        </p>
+        <div class="nav-actions">
+          <a class="btn btn-green" href="#technical-notes">Start Reading</a>
+          <a class="btn btn-dark" href="#pages">View All Pages</a>
+        </div>
+      </section>
+
+      <section class="section" id="technical-notes">
+        <div class="section-title">
+          <h2>Technical Notes</h2>
+          <p>
+            These notes are written for practical IT work: clear steps, real troubleshooting,
+            security planning, infrastructure design, and easy revision.
+          </p>
+        </div>
+
+        <article class="featured">
+          <div>
+            <span class="badge blue">Featured</span>
+            <h3>Recommended Technical Learning Path</h3>
+            <p>
+              Start with networking basics, then learn Linux, servers, virtualization,
+              firewall rules, Microsoft 365 security, monitoring, backup, and automation.
+            </p>
+            <a class="readmore" href="#pages">Read all topics →</a>
+          </div>
+          <div class="thumb">TECH<br />NOTES<br />2026</div>
+        </article>
+      </section>
+
+      <section class="section" id="posts">
+        <div class="section-title">
+          <h2>Latest Posts</h2>
+          <p>All cards and buttons are clickable. Later you can replace # links with your real GitHub page URLs.</p>
+        </div>
+
+        <div class="grid">
+          <article class="post blue">
+            <div class="tags">
+              <span class="badge pink">Networking</span>
+              <span class="badge green">VLAN</span>
+            </div>
+            <h3>Office VLAN Design for Better Security</h3>
+            <p>How to separate staff, servers, guest WiFi, CCTV, IP phones, and management networks using VLANs and firewall rules.</p>
+            <a class="readmore" href="#networking">Read note →</a>
+          </article>
+
+          <article class="post green">
+            <div class="tags">
+              <span class="badge blue">Servers</span>
+              <span class="badge purple">Proxmox</span>
+            </div>
+            <h3>Proxmox Backup and Restore Planning</h3>
+            <p>Simple backup strategy for VMs, storage planning, restore testing, and avoiding single points of failure.</p>
+            <a class="readmore" href="#servers">Read note →</a>
+          </article>
+
+          <article class="post yellow">
+            <div class="tags">
+              <span class="badge yellow">Security</span>
+              <span class="badge green">Wazuh</span>
+            </div>
+            <h3>Security Monitoring with Wazuh</h3>
+            <p>Basic SIEM monitoring, endpoint agents, Microsoft 365 alerts, log review, and incident visibility for small offices.</p>
+            <a class="readmore" href="#security">Read note →</a>
+          </article>
+
+          <article class="post pink">
+            <div class="tags">
+              <span class="badge blue">Cloud</span>
+              <span class="badge green">Microsoft 365</span>
+            </div>
+            <h3>Microsoft 365 Security Checklist</h3>
+            <p>MFA, secure admin accounts, conditional access planning, mailbox protection, audit logs, and data sharing controls.</p>
+            <a class="readmore" href="#cloud">Read note →</a>
+          </article>
+
+          <article class="post blue">
+            <div class="tags">
+              <span class="badge purple">ERP</span>
+              <span class="badge green">Odoo</span>
+            </div>
+            <h3>Odoo Customization Notes</h3>
+            <p>Practical ideas for approvals, record rules, timesheets, CRM visibility, and employee workflow improvements.</p>
+            <a class="readmore" href="#odoo">Read note →</a>
+          </article>
+
+          <article class="post green">
+            <div class="tags">
+              <span class="badge yellow">Automation</span>
+              <span class="badge blue">n8n</span>
+            </div>
+            <h3>Business Automation with n8n</h3>
+            <p>Automating reminders, reports, approvals, Microsoft 365 workflows, Odoo API checks, and Teams notifications.</p>
+            <a class="readmore" href="#automation">Read note →</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="pages">
+        <div class="section-title">
+          <h2>All Pages</h2>
+          <p>Use these sections as your website pages. Every left-side category link opens the correct section.</p>
+        </div>
+
+        <div class="grid">
+          <div class="info-card blue" id="networking">
+            <h3>Networking</h3>
+            <p>
+              Notes about VLANs, routing, firewall policies, DNS, DHCP, switching, access points,
+              trunk ports, LACP, network segmentation, and troubleshooting.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+
+          <div class="info-card green" id="servers">
+            <h3>Servers and Proxmox</h3>
+            <p>
+              Proxmox VM design, backup planning, storage checks, Dell iDRAC notes, Linux server setup,
+              service troubleshooting, and restore procedures.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+
+          <div class="info-card yellow" id="security">
+            <h3>Security</h3>
+            <p>
+              Firewall rules, endpoint protection, Wazuh SIEM, Suricata IDS, log review, hardening,
+              USB control, data protection, and network access restrictions.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+
+          <div class="info-card pink" id="cloud">
+            <h3>Cloud and Microsoft 365</h3>
+            <p>
+              Microsoft 365 administration, Entra ID, MFA, mail security, Azure basics, cloud monitoring,
+              domain management, and user account protection.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+
+          <div class="info-card purple" id="odoo">
+            <h3>Odoo and ERP</h3>
+            <p>
+              Odoo Online, Odoo Community, approvals, record rules, CRM customization, timesheet workflows,
+              employee access control, and API integration.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+
+          <div class="info-card blue" id="automation">
+            <h3>Automation</h3>
+            <p>
+              n8n workflows, Microsoft Teams notifications, Odoo API automation, scheduled reminders,
+              reporting workflows, and rule-based process automation.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+
+          <div class="info-card green" id="database">
+            <h3>Database and Storage</h3>
+            <p>
+              SQL basics, joins, indexes, PostgreSQL, backup planning, NAS usage, RAID concepts,
+              storage monitoring, and capacity planning.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+
+          <div class="info-card yellow" id="interviews">
+            <h3>Technical Interviews</h3>
+            <p>
+              System design, networking questions, Linux fundamentals, database concepts,
+              cloud basics, security questions, and troubleshooting scenarios.
+            </p>
+            <a class="readmore" href="#posts">Back to posts →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-box" id="contact">
+        <h2>Contact Basim Mohammed</h2>
+        <p>
+          For technical notes, IT guides, project discussions, or collaboration,
+          you can contact me by email or follow my official social media pages.
         </p>
 
-        <div class="share">
-          <a href="#">X / Twitter</a>
-          <a href="#">Reddit</a>
-          <a href="#">HN</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">Facebook</a>
-        </div>
-      </div>
+        <a class="email-link" href="mailto:info@basimvilayur.com">info@basimvilayur.com</a>
 
-      <article class="featured">
-        <div>
-          <span class="badge blue">Featured</span>
-          <h2>Recommended Materials for Technical Interviews</h2>
-          <p>Ace your technical interviews with these recommended resources.</p>
-          <a class="readmore" href="#">Read more →</a>
-        </div>
-        <div class="thumb">SYSTEM<br />DESIGN<br />NOTES</div>
-      </article>
-
-      <div id="posts" class="grid">
-        <article class="post">
-          <div class="tags">
-            <span class="badge yellow">System Design</span>
-            <span class="badge green">Interview Preparation</span>
-          </div>
-          <h3>How to Ace System Design Interviews</h3>
-          <p>A 7-step process to perform better in system design interviews.</p>
-          <div class="date">Updated 3/14/2026</div>
-        </article>
-
-        <article class="post pink">
-          <div class="tags">
-            <span class="badge pink">Networking</span>
-            <span class="badge green">Browsers</span>
-          </div>
-          <h3>What Happens When You Type a URL Into Your Browser?</h3>
-          <p>Explore the journey of a URL from browser input to webpage display.</p>
-          <div class="date">Updated 3/13/2026</div>
-        </article>
-
-        <article class="post blue">
-          <div class="tags">
-            <span class="badge pink">Networking</span>
-            <span class="badge green">Web Browsers</span>
-          </div>
-          <h3>What Happens When You Type google.com Into a Browser?</h3>
-          <p>Explore the journey of typing google.com into a browser.</p>
-          <div class="date">Updated 3/12/2026</div>
-        </article>
-
-        <article class="post green">
-          <div class="tags">
-            <span class="badge blue">SQL</span>
-            <span class="badge purple">Database</span>
-          </div>
-          <h3>How do SQL Joins Work?</h3>
-          <p>Learn how SQL joins work with detailed explanations and examples.</p>
-          <div class="date">Updated 3/11/2026</div>
-        </article>
-      </div>
-
-      <section class="newsletter" id="contact">
-        <h2>BasimTechGo Newsletter</h2>
-        <p>
-          Explain complex systems with simple terms. Join the newsletter to receive practical
-          infrastructure, security, and system design notes.
-        </p>
-        <div class="email-row">
-          <input type="email" placeholder="Enter your email" />
-          <button class="btn btn-green">Subscribe</button>
+        <div class="share" style="justify-content:center;">
+          <a href="https://www.linkedin.com/in/basimvilayur/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/basimvilayur" target="_blank" rel="noopener">X / Twitter</a>
+          <a href="https://www.facebook.com/basimvilayur" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/basimvilayur/" target="_blank" rel="noopener">Instagram</a>
         </div>
       </section>
     </section>
   </main>
 
   <footer>
-    © 2026 BasimTechGo. All rights reserved.
+    © 2026 Basim Mohammed. All rights reserved. | Email: <a href="mailto:info@basimvilayur.com">info@basimvilayur.com</a>
   </footer>
 </body>
 </html>
