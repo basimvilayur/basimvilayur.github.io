@@ -3,400 +3,488 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basimvilayur | Tech Notes</title>
-  <meta name="description" content="Simple modern technical blog by Basim Vilayur." />
+  <title>Basimvilayur | Technical Interviews</title>
+  <meta name="description" content="Clean technical blog layout inspired by ByteByteGo style." />
+
   <style>
     :root {
-      --bg: #0b1220;
-      --panel: #121a2b;
-      --panel-2: #18233a;
-      --text: #e8eefc;
-      --muted: #9fb0d1;
-      --line: #24324f;
-      --brand: #4da3ff;
-      --accent: #ff8a3d;
-      --max: 1100px;
-      --radius: 18px;
+      --bg: #f1f3f6;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #667085;
+      --line: #e5e7eb;
+      --brand: #12b76a;
+      --blue: #eef4ff;
+      --green: #ecfdf3;
+      --pink: #fff1f3;
+      --yellow: #fffaeb;
+      --radius: 16px;
+      --max: 1180px;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: linear-gradient(180deg, #09101d 0%, #0b1220 100%);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
       color: var(--text);
       line-height: 1.6;
     }
 
     a { color: inherit; text-decoration: none; }
 
-    .container {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
-      backdrop-filter: blur(10px);
-      background: rgba(11, 18, 32, 0.78);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      z-index: 20;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
     }
 
     .nav {
+      height: 64px;
+      max-width: var(--max);
+      margin: auto;
+      padding: 0 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 0;
-      gap: 16px;
     }
 
-    .brand {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-    }
-
-    .brand span { color: var(--brand); }
-
-    .menu {
+    .logo {
       display: flex;
-      gap: 18px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px;
+      font-weight: 800;
+      font-size: 1.12rem;
     }
 
-    .hero {
-      padding: 64px 0 36px;
-    }
-
-    .hero-grid {
+    .logo-mark {
+      width: 27px;
+      height: 27px;
+      border: 3px solid #143c2e;
+      border-radius: 8px;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
+      place-items: center;
+      color: var(--brand);
+      font-weight: 900;
+      font-size: 14px;
     }
 
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-    }
-
-    .hero-copy {
-      padding: 32px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(77,163,255,0.12);
-      color: #a9d0ff;
-      font-size: 0.88rem;
-      margin-bottom: 16px;
-      border: 1px solid rgba(77,163,255,0.24);
-    }
-
-    h1 {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      line-height: 1.1;
-      margin: 0 0 14px;
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 1.04rem;
-      margin: 0 0 24px;
-      max-width: 58ch;
-    }
-
-    .cta-row {
+    .nav-actions {
       display: flex;
+      align-items: center;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
     .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 9px;
+      padding: 10px 18px;
+      font-weight: 700;
+      font-size: .9rem;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: 600;
-      transition: 0.2s ease;
-      border: 1px solid transparent;
+      gap: 8px;
     }
 
-    .btn-primary {
+    .btn-green {
       background: var(--brand);
-      color: #061120;
+      color: white;
     }
 
-    .btn-primary:hover { transform: translateY(-1px); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text);
-      border-color: var(--line);
+    .btn-dark {
+      background: #171717;
+      color: white;
+      padding-inline: 22px;
     }
 
-    .hero-side {
-      padding: 24px;
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 22px 60px;
       display: grid;
-      gap: 14px;
-      align-content: start;
+      grid-template-columns: 270px 1fr;
+      gap: 28px;
     }
 
-    .mini {
-      background: var(--panel-2);
+    .sidebar {
+      background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px;
+      border-radius: var(--radius);
+      padding: 18px;
+      height: max-content;
+      position: sticky;
+      top: 86px;
     }
 
-    .mini strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.98rem;
+    .side-title {
+      color: #98a2b3;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      margin: 0 0 10px;
+      text-transform: uppercase;
     }
 
-    .mini span {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    section {
-      padding: 18px 0 26px;
-    }
-
-    .section-title {
+    .cat {
       display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 16px;
-      margin-bottom: 18px;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #475467;
+      font-size: .94rem;
+      margin-bottom: 4px;
     }
 
-    .section-title h2 {
-      margin: 0;
-      font-size: 1.6rem;
+    .cat.active {
+      background: #eef0f4;
+      color: #101828;
+      font-weight: 700;
     }
 
-    .section-title p {
+    .content {
+      min-width: 0;
+    }
+
+    .intro {
+      margin-bottom: 26px;
+    }
+
+    .intro h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.9rem, 3vw, 2.7rem);
+      line-height: 1.15;
+      letter-spacing: -.03em;
+    }
+
+    .intro p {
       margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .share {
+      margin-top: 18px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .share a {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: .82rem;
+      color: #344054;
+      font-weight: 600;
+    }
+
+    .featured {
+      background: linear-gradient(110deg, #eff8ff, #f0fdf4);
+      border: 1px solid #d8f3e5;
+      border-radius: var(--radius);
+      padding: 26px;
+      display: grid;
+      grid-template-columns: 1fr 170px;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(16, 24, 40, .04);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .badge.blue { background: #dbeafe; color: #2563eb; }
+    .badge.green { background: #dcfce7; color: #15803d; }
+    .badge.pink { background: #ffe4e6; color: #be123c; }
+    .badge.yellow { background: #fef3c7; color: #b45309; }
+    .badge.purple { background: #f3e8ff; color: #7e22ce; }
+
+    .featured h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+    }
+
+    .featured p {
+      margin: 0 0 28px;
       color: var(--muted);
     }
 
-    .posts {
+    .readmore {
+      color: #475467;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .thumb {
+      width: 150px;
+      height: 130px;
+      background: #101828;
+      border-radius: 14px;
+      border: 8px solid #fff;
+      box-shadow: 0 10px 25px rgba(16,24,40,.15);
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.2;
+      padding: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
     }
 
     .post {
-      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      min-height: 185px;
+      box-shadow: 0 8px 24px rgba(16, 24, 40, .035);
     }
 
-    .post-body {
-      padding: 22px;
-    }
+    .post.blue { background: linear-gradient(135deg, #fff, var(--blue)); }
+    .post.green { background: linear-gradient(135deg, #fff, var(--green)); }
+    .post.pink { background: linear-gradient(135deg, #fff, var(--pink)); }
+    .post.yellow { background: linear-gradient(135deg, #fff, var(--yellow)); }
 
-    .tag {
-      display: inline-block;
-      font-size: 0.78rem;
-      color: #ffd3b4;
-      background: rgba(255,138,61,0.12);
-      border: 1px solid rgba(255,138,61,0.22);
-      padding: 6px 10px;
-      border-radius: 999px;
+    .tags {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
       margin-bottom: 14px;
     }
 
     .post h3 {
       margin: 0 0 8px;
-      font-size: 1.12rem;
+      font-size: 1.08rem;
+      line-height: 1.35;
     }
 
     .post p {
-      margin: 0 0 14px;
+      margin: 0 0 16px;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: .92rem;
     }
 
-    .post-meta {
-      font-size: 0.84rem;
-      color: #88a0c6;
+    .date {
+      color: #667085;
+      font-size: .84rem;
+      font-weight: 600;
     }
 
-    .about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .about-card {
-      padding: 24px;
-    }
-
-    .list {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-    }
-
-    .footer {
-      padding: 28px 0 48px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .code-line {
-      font-family: Consolas, monospace;
-      background: #0a1020;
+    .newsletter {
+      margin-top: 28px;
+      background: #fff;
       border: 1px solid var(--line);
-      color: #b9cdf3;
+      border-radius: var(--radius);
+      padding: 44px 24px;
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+      text-decoration: underline;
+    }
+
+    .newsletter p {
+      max-width: 520px;
+      margin: 0 auto 18px;
+      color: var(--muted);
+    }
+
+    .email-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .email-row input {
+      width: min(360px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 10px;
       padding: 12px 14px;
-      border-radius: 12px;
-      overflow-x: auto;
-      white-space: nowrap;
+      font-size: .95rem;
+    }
+
+    footer {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 22px 35px;
+      color: var(--muted);
+      font-size: .9rem;
     }
 
     @media (max-width: 900px) {
-      .hero-grid,
-      .posts,
-      .about {
+      .page {
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        padding-top: 36px;
+      .sidebar {
+        position: static;
+      }
+
+      .featured {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        height: auto;
+        padding-block: 14px;
+        align-items: flex-start;
+        gap: 12px;
+        flex-direction: column;
+      }
+
+      .nav-actions {
+        width: 100%;
+        flex-wrap: wrap;
       }
     }
   </style>
 </head>
+
 <body>
   <header class="topbar">
-    <div class="container nav">
-      <a class="brand" href="#">Basim<span>Mohammed</span></a>
-      <nav class="menu">
-        <a href="#posts">Posts</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
+    <div class="nav">
+      <a href="#" class="logo">
+        <span class="logo-mark">B</span>
+        BasimTechGo
+      </a>
+
+      <div class="nav-actions">
+        <a class="btn btn-green" href="#posts">📖 Explore All Posts</a>
+        <a class="btn btn-dark" href="#contact">Login</a>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="hero container">
-      <div class="hero-grid">
-        <div class="card hero-copy">
-          <div class="eyebrow">Technical Blog • Notes • Guides</div>
-          <h1>Simple modern website for your technical posts</h1>
-          <p>
-            Share practical notes, troubleshooting guides, network setups, server lessons, and automation ideas in a clean, professional layout.
-          </p>
-          <div class="cta-row">
-            <a class="btn btn-primary" href="#posts">Read Posts</a>
-            <a class="btn btn-secondary" href="#about">About Me</a>
-          </div>
-        </div>
+  <main class="page">
+    <aside class="sidebar">
+      <p class="side-title">Categories</p>
+      <a class="cat" href="#">🌐 API and Web Development</a>
+      <a class="cat" href="#">🛠 Real World Case Studies</a>
+      <a class="cat" href="#">🤖 AI and Machine Learning</a>
+      <a class="cat" href="#">🗄 Database and Storage</a>
+      <a class="cat active" href="#">🎯 Technical Interviews</a>
+      <a class="cat" href="#">⚡ Caching & Performance</a>
+      <a class="cat" href="#">💰 Payment and Fintech</a>
+      <a class="cat" href="#">🏗 Software Architecture</a>
+      <a class="cat" href="#">☁️ Cloud & Distributed Systems</a>
+      <a class="cat" href="#">🔐 Security</a>
+      <a class="cat" href="#">💻 Computer Fundamentals</a>
+    </aside>
 
-        <div class="card hero-side">
-          <div class="mini">
-            <strong>Topics</strong>
-            <span>Networking, servers, Odoo, Microsoft 365, security, automation</span>
-          </div>
-          <div class="mini">
-            <strong>Style</strong>
-            <span>Short technical writeups with real-world solutions and screenshots</span>
-          </div>
-          <div class="mini">
-            <strong>Quick Note</strong>
-            <span>Start simple now. Add blog pages and categories later.</span>
-          </div>
+    <section class="content">
+      <div class="intro">
+        <h1>Technical Interviews</h1>
+        <p>
+          Technical interviews are a critical part of the hiring process for software engineers.
+          This page includes system design notes, coding concepts, networking basics, database topics,
+          and real-world interview preparation resources.
+        </p>
+
+        <div class="share">
+          <a href="#">X / Twitter</a>
+          <a href="#">Reddit</a>
+          <a href="#">HN</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Facebook</a>
         </div>
       </div>
-    </section>
 
-    <section id="posts" class="container">
-      <div class="section-title">
+      <article class="featured">
         <div>
-          <h2>Latest Posts</h2>
-          <p>Edit these sample cards and replace them with your real articles.</p>
+          <span class="badge blue">Featured</span>
+          <h2>Recommended Materials for Technical Interviews</h2>
+          <p>Ace your technical interviews with these recommended resources.</p>
+          <a class="readmore" href="#">Read more →</a>
         </div>
-      </div>
+        <div class="thumb">SYSTEM<br />DESIGN<br />NOTES</div>
+      </article>
 
-      <div class="posts">
-        <article class="card post">
-          <div class="post-body">
-            <div class="tag">Networking</div>
-            <h3>How I segment office VLANs for better control</h3>
-            <p>A practical overview of VLAN planning, firewall rules, and keeping wireless and wired users properly separated.</p>
-            <div class="post-meta">April 2026 • 5 min read</div>
+      <div id="posts" class="grid">
+        <article class="post">
+          <div class="tags">
+            <span class="badge yellow">System Design</span>
+            <span class="badge green">Interview Preparation</span>
           </div>
+          <h3>How to Ace System Design Interviews</h3>
+          <p>A 7-step process to perform better in system design interviews.</p>
+          <div class="date">Updated 3/14/2026</div>
         </article>
 
-        <article class="card post">
-          <div class="post-body">
-            <div class="tag">Servers</div>
-            <h3>Proxmox backup strategy that is simple and reliable</h3>
-            <p>My preferred approach for VM backup flow, restore planning, and avoiding storage mistakes before disaster happens.</p>
-            <div class="post-meta">April 2026 • 6 min read</div>
+        <article class="post pink">
+          <div class="tags">
+            <span class="badge pink">Networking</span>
+            <span class="badge green">Browsers</span>
           </div>
+          <h3>What Happens When You Type a URL Into Your Browser?</h3>
+          <p>Explore the journey of a URL from browser input to webpage display.</p>
+          <div class="date">Updated 3/13/2026</div>
         </article>
 
-        <article class="card post">
-          <div class="post-body">
-            <div class="tag">Automation</div>
-            <h3>Using n8n for internal business process automation</h3>
-            <p>Where rule-based workflows fit best, how to keep them maintainable, and what to document from day one.</p>
-            <div class="post-meta">April 2026 • 4 min read</div>
+        <article class="post blue">
+          <div class="tags">
+            <span class="badge pink">Networking</span>
+            <span class="badge green">Web Browsers</span>
           </div>
+          <h3>What Happens When You Type google.com Into a Browser?</h3>
+          <p>Explore the journey of typing google.com into a browser.</p>
+          <div class="date">Updated 3/12/2026</div>
+        </article>
+
+        <article class="post green">
+          <div class="tags">
+            <span class="badge blue">SQL</span>
+            <span class="badge purple">Database</span>
+          </div>
+          <h3>How do SQL Joins Work?</h3>
+          <p>Learn how SQL joins work with detailed explanations and examples.</p>
+          <div class="date">Updated 3/11/2026</div>
         </article>
       </div>
-    </section>
 
-    <section id="about" class="container">
-      <div class="section-title">
-        <div>
-          <h2>About This Site</h2>
-          <p>Clean structure, easy to edit, and good for long-term growth.</p>
+      <section class="newsletter" id="contact">
+        <h2>BasimTechGo Newsletter</h2>
+        <p>
+          Explain complex systems with simple terms. Join the newsletter to receive practical
+          infrastructure, security, and system design notes.
+        </p>
+        <div class="email-row">
+          <input type="email" placeholder="Enter your email" />
+          <button class="btn btn-green">Subscribe</button>
         </div>
-      </div>
-
-      <div class="about">
-        <div class="card about-card">
-          <h3>About Me</h3>
-          <p style="color: var(--muted);">
-            I share hands-on technical notes about infrastructure, troubleshooting, firewalls, virtualization, Microsoft 365, and practical IT operations.
-          </p>
-          <div class="code-line">git commit -m "Publish new technical post"</div>
-        </div>
-
-        <div class="card about-card">
-          <h3>Best structure later</h3>
-          <ul class="list">
-            <li>Home page for highlights</li>
-            <li>Separate posts page or blog folder</li>
-            <li>One article per HTML page</li>
-            <li>Keep CSS separate when site grows</li>
-            <li>Add search or categories later</li>
-          </ul>
-        </div>
-      </div>
+      </section>
     </section>
   </main>
 
-  <footer id="contact" class="container footer">
-    <div class="card about-card">
-      <strong>Contact</strong><br />
-      Email: info@basimvilayur.com<br />
-      © 2026 Basimvilayur • Technical Notes
-    </div>
+  <footer>
+    © 2026 BasimTechGo. All rights reserved.
   </footer>
 </body>
 </html>
