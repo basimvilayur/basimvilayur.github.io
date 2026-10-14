@@ -1,9 +1,21 @@
 [
   {
+    "title": "Automating my home media server",
+    "summary": "",
+    "category": "networking",
+    "tags": [],
+    "source": "linkedin",
+    "date": "2026-10-14",
+    "url": "https://www.linkedin.com/posts/basimvilayur_homelab-proxmox-docker-share-7513636329449091072-pPaP/"
+  },
+  {
     "title": "Office VLAN Design for Better Security",
     "summary": "How to separate staff, servers, guest WiFi, CCTV, IP phones, and management networks using VLANs and firewall rules.",
     "category": "networking",
-    "tags": ["Networking", "VLAN"],
+    "tags": [
+      "Networking",
+      "VLAN"
+    ],
     "source": "note",
     "date": "",
     "url": ""
@@ -12,7 +24,10 @@
     "title": "Proxmox Backup and Restore Planning",
     "summary": "Simple backup strategy for VMs, storage planning, restore testing, and avoiding single points of failure.",
     "category": "servers",
-    "tags": ["Servers", "Proxmox"],
+    "tags": [
+      "Servers",
+      "Proxmox"
+    ],
     "source": "note",
     "date": "",
     "url": ""
@@ -21,7 +36,10 @@
     "title": "Security Monitoring with Wazuh",
     "summary": "Basic SIEM monitoring, endpoint agents, Microsoft 365 alerts, log review, and incident visibility for small offices.",
     "category": "security",
-    "tags": ["Security", "Wazuh"],
+    "tags": [
+      "Security",
+      "Wazuh"
+    ],
     "source": "note",
     "date": "",
     "url": ""
@@ -30,7 +48,10 @@
     "title": "Microsoft 365 Security Checklist",
     "summary": "MFA, secure admin accounts, conditional access planning, mailbox protection, audit logs, and data sharing controls.",
     "category": "cloud",
-    "tags": ["Cloud", "Microsoft 365"],
+    "tags": [
+      "Cloud",
+      "Microsoft 365"
+    ],
     "source": "note",
     "date": "",
     "url": ""
@@ -39,7 +60,10 @@
     "title": "Odoo Customization Notes",
     "summary": "Practical ideas for approvals, record rules, timesheets, CRM visibility, and employee workflow improvements.",
     "category": "odoo",
-    "tags": ["ERP", "Odoo"],
+    "tags": [
+      "ERP",
+      "Odoo"
+    ],
     "source": "note",
     "date": "",
     "url": ""
@@ -48,7 +72,10 @@
     "title": "Business Automation with n8n",
     "summary": "Automating reminders, reports, approvals, Microsoft 365 workflows, Odoo API checks, and Teams notifications.",
     "category": "automation",
-    "tags": ["Automation", "n8n"],
+    "tags": [
+      "Automation",
+      "n8n"
+    ],
     "source": "note",
     "date": "",
     "url": ""
