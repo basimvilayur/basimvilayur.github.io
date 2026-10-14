@@ -5,27 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Basim Mohammed | Technical Notes</title>
   <meta name="description" content="Technical notes, IT guides, networking, servers, security, cloud, and interview preparation by Basim Mohammed." />
+  <meta name="theme-color" content="#0b1220" />
+  <meta property="og:title" content="Basim Mohammed | Technical Notes" />
+  <meta property="og:description" content="Practical IT notes on networking, servers, Proxmox, security, Microsoft 365, Odoo and automation." />
+  <meta property="og:url" content="https://www.basimvilayur.com/" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2312b76a'/><text x='32' y='43' font-family='Arial' font-weight='900' font-size='30' text-anchor='middle' fill='white'>BM</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg: #f1f3f6;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #667085;
-      --line: #e5e7eb;
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-2: #f1f4f9;
+      --text: #0f172a;
+      --muted: #5b6577;
+      --line: #e3e8ef;
       --brand: #12b76a;
-      --dark: #171717;
-      --blue: #eef4ff;
-      --green: #ecfdf3;
-      --pink: #fff1f3;
-      --yellow: #fffaeb;
-      --purple: #f7f2ff;
-      --radius: 16px;
-      --max: 1180px;
+      --brand-2: #0ea5e9;
+      --brand-ink: #067647;
+      --hero-bg: #0b1220;
+      --hero-text: #e6edf7;
+      --hero-muted: #9fb0c8;
+      --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px rgba(15, 23, 42, .06);
+      --shadow-lg: 0 18px 50px rgba(15, 23, 42, .12);
+      --radius: 18px;
+      --max: 1160px;
+      --c-net: #0ea5e9;
+      --c-srv: #8b5cf6;
+      --c-sec: #f43f5e;
+      --c-cld: #3b82f6;
+      --c-erp: #a855f7;
+      --c-aut: #f59e0b;
+      --c-db: #14b8a6;
+      --c-int: #12b76a;
+      --c-li: #0a66c2;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #070b14;
+        --surface: #0f1625;
+        --surface-2: #151e30;
+        --text: #e6edf7;
+        --muted: #94a3b8;
+        --line: #1f2a3d;
+        --brand-ink: #4ade80;
+        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+        --shadow-lg: 0 18px 50px rgba(0, 0, 0, .45);
+      }
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
     body {
       margin: 0;
@@ -33,605 +67,642 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
 
+    /* ---------- Nav ---------- */
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: #fff;
-      border-bottom: 1px solid var(--line);
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+      border-bottom: 1px solid transparent;
+      color: var(--hero-text);
     }
-
+    .topbar.scrolled {
+      background: color-mix(in srgb, var(--surface) 82%, transparent);
+      backdrop-filter: saturate(160%) blur(14px);
+      -webkit-backdrop-filter: saturate(160%) blur(14px);
+      border-bottom-color: var(--line);
+      color: var(--text);
+    }
     .nav {
-      min-height: 64px;
-      max-width: var(--max);
-      margin: auto;
-      padding: 12px 22px;
+      height: 68px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
     }
-
-    .logo {
-      font-weight: 850;
-      font-size: 1.2rem;
-      letter-spacing: -.02em;
-      white-space: nowrap;
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 850; letter-spacing: -.02em; font-size: 1.08rem; }
+    .logo-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #fff; font-size: .82rem; font-weight: 900;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 16px;
-      color: #475467;
-      font-weight: 650;
-      font-size: .92rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    .nav-links { display: flex; gap: 4px; font-weight: 600; font-size: .92rem; }
+    .nav-links a { padding: 8px 12px; border-radius: 10px; opacity: .85; transition: .2s; }
+    .nav-links a:hover { opacity: 1; background: rgba(127, 127, 127, .14); }
+    .menu-btn {
+      display: none; background: none; border: 0; color: inherit; cursor: pointer;
+      width: 40px; height: 40px; border-radius: 10px; font-size: 1.3rem;
     }
 
     .btn {
-      border: 0;
-      cursor: pointer;
-      border-radius: 9px;
-      padding: 10px 16px;
-      font-weight: 750;
-      font-size: .9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: .2s ease;
+      border: 0; cursor: pointer; border-radius: 12px;
+      padding: 11px 18px; font: inherit; font-weight: 700; font-size: .92rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
     }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      opacity: .92;
+    .btn:hover { transform: translateY(-2px); }
+    .btn-brand {
+      background: linear-gradient(135deg, var(--brand), #0fa968);
+      color: #fff; box-shadow: 0 8px 22px rgba(18, 183, 106, .35);
     }
-
-    .btn-green {
-      background: var(--brand);
-      color: white;
+    .btn-ghost {
+      background: rgba(255, 255, 255, .08);
+      color: var(--hero-text);
+      border: 1px solid rgba(255, 255, 255, .16);
     }
+    .btn-ghost:hover { background: rgba(255, 255, 255, .14); }
+    .btn-li { background: var(--c-li); color: #fff; }
 
-    .btn-dark {
-      background: var(--dark);
-      color: white;
-    }
-
-    .page {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 32px 22px 60px;
-      display: grid;
-      grid-template-columns: 270px 1fr;
-      gap: 28px;
-    }
-
-    .sidebar {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 18px;
-      height: max-content;
-      position: sticky;
-      top: 86px;
-    }
-
-    .side-title {
-      color: #98a2b3;
-      font-size: .76rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      margin: 0 0 10px;
-      text-transform: uppercase;
-    }
-
-    .cat {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      color: #475467;
-      font-size: .94rem;
-      margin-bottom: 4px;
-    }
-
-    .cat:hover,
-    .cat.active {
-      background: #eef0f4;
-      color: #101828;
-      font-weight: 700;
-    }
-
-    .content { min-width: 0; }
-
+    /* ---------- Hero ---------- */
     .hero {
-      background: linear-gradient(120deg, #ffffff 0%, #eff8ff 48%, #f0fdf4 100%);
-      border: 1px solid #dfe7ef;
-      border-radius: 22px;
-      padding: 36px;
-      margin-bottom: 26px;
-      box-shadow: 0 10px 28px rgba(16, 24, 40, .05);
+      position: relative;
+      overflow: hidden;
+      background: var(--hero-bg);
+      color: var(--hero-text);
+      padding: 140px 0 90px;
     }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+    }
+    .glow {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; pointer-events: none;
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+    .glow.g1 { width: 420px; height: 420px; background: #12b76a; top: -120px; left: -80px; }
+    .glow.g2 { width: 380px; height: 380px; background: #0ea5e9; bottom: -160px; right: -60px; animation-delay: -6s; }
+    .glow.g3 { width: 260px; height: 260px; background: #8b5cf6; top: 30%; right: 30%; opacity: .3; animation-delay: -3s; }
+    @keyframes drift { to { transform: translate(40px, 30px) scale(1.08); } }
 
-    .eyebrow {
-      display: inline-block;
-      background: #dcfce7;
-      color: #15803d;
-      padding: 6px 11px;
-      border-radius: 999px;
-      font-size: .78rem;
-      font-weight: 850;
-      margin-bottom: 14px;
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.25fr .9fr;
+      gap: 48px;
+      align-items: center;
     }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(18, 183, 106, .12);
+      border: 1px solid rgba(18, 183, 106, .35);
+      color: #6ee7b7; font-size: .8rem; font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 0 rgba(52, 211, 153, .7); animation: ping 2s infinite; }
+    @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); } }
 
     .hero h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      line-height: 1.1;
-      letter-spacing: -.04em;
-    }
-
-    .hero p {
-      margin: 0 0 22px;
-      color: var(--muted);
-      max-width: 800px;
-      font-size: 1.03rem;
-    }
-
-    .section {
-      margin-top: 30px;
-    }
-
-    .section-title h2 {
-      margin: 0 0 8px;
-      font-size: 1.65rem;
-      letter-spacing: -.02em;
-    }
-
-    .section-title p {
-      margin: 0;
-      max-width: 800px;
-      color: var(--muted);
-      font-size: .98rem;
-    }
-
-    .share {
-      margin-top: 18px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .share a {
-      background: #fff;
-      border: 1px solid var(--line);
-      padding: 7px 12px;
-      border-radius: 8px;
-      font-size: .84rem;
-      color: #344054;
-      font-weight: 700;
-    }
-
-    .featured {
-      background: linear-gradient(110deg, #eff8ff, #f0fdf4);
-      border: 1px solid #d8f3e5;
-      border-radius: var(--radius);
-      padding: 26px;
-      display: grid;
-      grid-template-columns: 1fr 170px;
-      gap: 20px;
-      align-items: center;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 24px rgba(16, 24, 40, .04);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: .72rem;
-      font-weight: 850;
-      margin-bottom: 14px;
-    }
-
-    .badge.blue { background: #dbeafe; color: #2563eb; }
-    .badge.green { background: #dcfce7; color: #15803d; }
-    .badge.pink { background: #ffe4e6; color: #be123c; }
-    .badge.yellow { background: #fef3c7; color: #b45309; }
-    .badge.purple { background: #f3e8ff; color: #7e22ce; }
-
-    .featured h3 {
-      margin: 0 0 8px;
-      font-size: 1.2rem;
-    }
-
-    .featured p {
-      margin: 0 0 20px;
-      color: var(--muted);
-    }
-
-    .readmore {
-      color: #475467;
-      font-weight: 800;
-      font-size: .9rem;
-    }
-
-    .thumb {
-      width: 150px;
-      height: 130px;
-      background: #101828;
-      border-radius: 14px;
-      border: 8px solid #fff;
-      box-shadow: 0 10px 25px rgba(16,24,40,.15);
-      display: grid;
-      place-items: center;
-      color: white;
+      margin: 0 0 18px;
+      font-size: clamp(2.3rem, 5.4vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -.045em;
       font-weight: 900;
-      text-align: center;
-      line-height: 1.2;
-      padding: 12px;
     }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-      margin-top: 18px;
+    .grad {
+      background: linear-gradient(90deg, #34d399, #38bdf8 55%, #a78bfa);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
+    .hero p.lead { margin: 0 0 28px; color: var(--hero-muted); font-size: 1.1rem; max-width: 600px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .stats { display: flex; gap: 28px; margin-top: 36px; flex-wrap: wrap; }
+    .stat b { display: block; font-size: 1.6rem; font-weight: 850; letter-spacing: -.02em; color: #fff; }
+    .stat span { font-size: .82rem; color: var(--hero-muted); }
 
-    .post,
-    .info-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 24px;
-      min-height: 185px;
-      box-shadow: 0 8px 24px rgba(16, 24, 40, .035);
-    }
-
-    .post.blue, .info-card.blue { background: linear-gradient(135deg, #fff, var(--blue)); }
-    .post.green, .info-card.green { background: linear-gradient(135deg, #fff, var(--green)); }
-    .post.pink, .info-card.pink { background: linear-gradient(135deg, #fff, var(--pink)); }
-    .post.yellow, .info-card.yellow { background: linear-gradient(135deg, #fff, var(--yellow)); }
-    .info-card.purple { background: linear-gradient(135deg, #fff, var(--purple)); }
-
-    .tags {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .post h3,
-    .info-card h3 {
-      margin: 0 0 8px;
-      font-size: 1.08rem;
-      line-height: 1.35;
-    }
-
-    .post p,
-    .info-card p {
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: .92rem;
-    }
-
-    .date {
-      color: #667085;
+    .terminal {
+      background: rgba(15, 22, 37, .82);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+      font-family: "JetBrains Mono", Consolas, monospace;
       font-size: .84rem;
-      font-weight: 650;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
     }
+    .term-bar { display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.07); align-items: center; }
+    .term-bar i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+    .term-bar i:nth-child(1) { background: #ff5f57; }
+    .term-bar i:nth-child(2) { background: #febc2e; }
+    .term-bar i:nth-child(3) { background: #28c840; }
+    .term-bar span { margin-left: 8px; color: #64748b; font-size: .76rem; }
+    .term-body { padding: 18px 18px 22px; line-height: 1.85; color: #cbd5e1; min-height: 250px; white-space: pre-wrap; }
+    .term-body .p { color: #34d399; }
+    .term-body .k { color: #38bdf8; }
+    .term-body .ok { color: #4ade80; }
+    .cursor { display: inline-block; width: 8px; height: 1.05em; background: #34d399; vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
 
-    .contact-box {
-      margin-top: 28px;
-      background: #fff;
+    /* ---------- Sections ---------- */
+    section.block { padding: 84px 0 0; }
+    .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 28px; flex-wrap: wrap; }
+    .kicker { font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--brand-ink); margin: 0 0 6px; }
+    .sec-head h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.3rem); letter-spacing: -.03em; line-height: 1.15; }
+    .sec-head p { margin: 8px 0 0; color: var(--muted); max-width: 620px; }
+
+    /* Topics */
+    .topics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .topic {
+      --c: var(--brand);
+      position: relative;
+      background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 38px 24px;
-      text-align: center;
+      padding: 22px;
+      cursor: pointer;
+      text-align: left;
+      font: inherit; color: inherit;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      overflow: hidden;
     }
-
-    .contact-box h2 {
-      margin: 0 0 8px;
-      font-size: 1.45rem;
-      text-decoration: underline;
+    .topic::after {
+      content: ""; position: absolute; inset: auto 0 0 0; height: 3px;
+      background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
     }
-
-    .contact-box p {
-      max-width: 600px;
-      margin: 0 auto 16px;
-      color: var(--muted);
+    .topic:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--c) 40%, var(--line)); }
+    .topic:hover::after { transform: scaleX(1); }
+    .topic .ico {
+      width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-size: 1.35rem;
+      background: color-mix(in srgb, var(--c) 14%, transparent); margin-bottom: 14px;
     }
+    .topic h3 { margin: 0 0 6px; font-size: 1.02rem; letter-spacing: -.01em; }
+    .topic p { margin: 0; color: var(--muted); font-size: .86rem; line-height: 1.55; }
+    .topic .count { position: absolute; top: 18px; right: 18px; font-size: .74rem; font-weight: 700; color: var(--muted); background: var(--surface-2); padding: 3px 9px; border-radius: 999px; }
 
-    .email-link {
-      display: inline-flex;
-      margin: 8px 0 12px;
-      background: #f9fafb;
+    /* Posts */
+    .toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 22px; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+    .chip {
+      border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+      padding: 7px 14px; border-radius: 999px; font: inherit; font-size: .85rem; font-weight: 650; cursor: pointer; transition: .2s;
+    }
+    .chip:hover { color: var(--text); }
+    .chip.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .search {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0 12px;
+      min-width: 240px;
+    }
+    .search input { border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: .9rem; padding: 10px 0; width: 100%; }
+    .search:focus-within { border-color: var(--brand); box-shadow: 0 0 0 4px rgba(18, 183, 106, .15); }
+
+    .posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .post {
+      --c: var(--brand);
+      display: flex; flex-direction: column;
+      background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-weight: 800;
-      color: #101828;
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, box-shadow .25s ease;
+      position: relative;
+      overflow: hidden;
+      animation: rise .45s ease both;
+    }
+    .post::before {
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 4px;
+      background: linear-gradient(90deg, var(--c), color-mix(in srgb, var(--c) 30%, transparent));
+    }
+    .post:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+    .post-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; font-size: .78rem; color: var(--muted); font-weight: 600; }
+    .src { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; }
+    .src.li { color: var(--c-li); }
+    @media (prefers-color-scheme: dark) { .src.li { color: #60a5fa; } }
+    .post h3 { margin: 0 0 8px; font-size: 1.05rem; line-height: 1.35; letter-spacing: -.01em; }
+    .post p { margin: 0 0 16px; color: var(--muted); font-size: .9rem; flex: 1; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag { font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: color-mix(in srgb, var(--c) 13%, transparent); color: color-mix(in srgb, var(--c) 75%, var(--text)); }
+    .readmore { font-weight: 750; font-size: .88rem; color: var(--text); display: inline-flex; gap: 6px; align-items: center; }
+    .readmore:hover { color: var(--brand-ink); }
+    .empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 40px; border: 1px dashed var(--line); border-radius: var(--radius); }
+    .more-wrap { text-align: center; margin-top: 22px; }
+    .btn-outline { background: var(--surface); color: var(--text); border: 1px solid var(--line); }
+
+    /* Learning path */
+    .path {
+      background: linear-gradient(135deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+    .steps { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; counter-reset: s; margin-top: 8px; }
+    .step { position: relative; text-align: center; font-size: .84rem; font-weight: 650; color: var(--muted); }
+    .step::before {
+      counter-increment: s; content: counter(s);
+      display: grid; place-items: center; margin: 0 auto 10px;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--surface); border: 2px solid var(--brand); color: var(--brand-ink); font-weight: 850;
+      position: relative; z-index: 1;
+    }
+    .step:not(:last-child)::after {
+      content: ""; position: absolute; top: 21px; left: calc(50% + 21px); right: calc(-50% + 21px);
+      height: 2px; background: linear-gradient(90deg, var(--brand), var(--brand-2));
     }
 
-    footer {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 22px 35px;
-      color: var(--muted);
-      font-size: .9rem;
+    /* Contact */
+    .cta {
+      position: relative; overflow: hidden;
+      margin: 84px 0 0;
+      background: var(--hero-bg); color: var(--hero-text);
+      border-radius: 26px; padding: 56px 32px; text-align: center;
+    }
+    .cta .glow.g1 { width: 300px; height: 300px; top: -140px; left: 10%; }
+    .cta .glow.g2 { width: 300px; height: 300px; bottom: -160px; right: 10%; }
+    .cta > * { position: relative; }
+    .cta h2 { margin: 0 0 10px; font-size: clamp(1.7rem, 3.4vw, 2.4rem); letter-spacing: -.03em; }
+    .cta p { margin: 0 auto 24px; color: var(--hero-muted); max-width: 560px; }
+    .socials { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+    .socials a {
+      width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); transition: .2s;
+    }
+    .socials a:hover { background: rgba(255,255,255,.16); transform: translateY(-2px); }
+    .socials svg { width: 19px; height: 19px; fill: currentColor; }
+
+    footer { padding: 34px 0 40px; color: var(--muted); font-size: .88rem; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
     }
 
-    @media (max-width: 900px) {
-      .page { grid-template-columns: 1fr; }
-      .sidebar { position: static; }
-      .featured { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: 1fr; }
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
+    @media (max-width: 1000px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .topics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 22px; }
+      .step:nth-child(4n)::after { display: none; }
+    }
+    @media (max-width: 760px) {
+      .menu-btn { display: grid; place-items: center; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 12px; right: 12px;
+        flex-direction: column; padding: 10px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow-lg);
       }
-      .nav-actions { width: 100%; }
+      .nav-links.open { display: flex; }
+      .nav .btn-brand { display: none; }
+      .hero { padding: 116px 0 64px; }
+      .terminal { display: none; }
+      .search { min-width: 0; width: 100%; }
+    }
+    @media (max-width: 560px) {
+      .posts { grid-template-columns: 1fr; }
+      .topics { gap: 10px; }
+      .topic { padding: 16px; display: flex; flex-direction: column; align-items: flex-start; }
+      .topic p { display: none; }
+      .topic .count { position: static; order: 3; margin-top: 8px; }
+      .topic .ico { width: 40px; height: 40px; margin-bottom: 10px; }
+      .topic h3 { font-size: .92rem; }
+      .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .step:nth-child(2n)::after { display: none; }
+      .path { padding: 24px 18px; }
+      .cta { padding: 44px 20px; border-radius: 20px; }
     }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="nav">
-      <a href="#home" class="logo">Basim Mohammed</a>
-
-      <nav class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#technical-notes">Technical Notes</a>
-        <a href="#posts">Posts</a>
-        <a href="#pages">Pages</a>
+  <header class="topbar" id="topbar">
+    <div class="wrap nav">
+      <a href="#home" class="logo"><span class="logo-mark">BM</span> Basim Mohammed</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#topics">Topics</a>
+        <a href="#posts">Latest Posts</a>
+        <a href="#path">Learning Path</a>
         <a href="#contact">Contact</a>
       </nav>
-
-      <div class="nav-actions">
-        <a class="btn btn-green" href="#posts">📖 Explore All Posts</a>
-        <a class="btn btn-dark" href="mailto:info@basimvilayur.com">Email Me</a>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a class="btn btn-brand" href="https://www.linkedin.com/in/basimvilayur/" target="_blank" rel="noopener">Follow on LinkedIn</a>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
       </div>
     </div>
   </header>
 
-  <main class="page">
-    <aside class="sidebar">
-      <p class="side-title">Categories</p>
-      <a class="cat active" href="#home">🏠 Home</a>
-      <a class="cat" href="#networking">🌐 Networking</a>
-      <a class="cat" href="#servers">🖥 Servers & Proxmox</a>
-      <a class="cat" href="#security">🔐 Security</a>
-      <a class="cat" href="#cloud">☁️ Cloud & Microsoft 365</a>
-      <a class="cat" href="#odoo">🧩 Odoo & ERP</a>
-      <a class="cat" href="#automation">⚙️ Automation</a>
-      <a class="cat" href="#database">🗄 Database & Storage</a>
-      <a class="cat" href="#interviews">🎯 Technical Interviews</a>
-      <a class="cat" href="#contact">📩 Contact</a>
-    </aside>
-
-    <section class="content">
-      <section class="hero" id="home">
-        <span class="eyebrow">Technical Blog • IT Notes • Real-World Guides</span>
-        <h1>Practical technical notes by Basim Mohammed</h1>
-        <p>
-          Welcome to my technical knowledge base. I share simple and practical notes about networking,
-          servers, Proxmox, firewalls, Microsoft 365, Odoo, security monitoring, cloud, automation,
-          and interview preparation.
+  <section class="hero" id="home">
+    <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+    <div class="wrap hero-inner">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> Technical Blog • IT Notes • Real-World Guides</span>
+        <h1>Practical technical notes by <span class="grad">Basim Mohammed</span></h1>
+        <p class="lead">
+          Simple, practical notes on networking, servers, Proxmox, firewalls, Microsoft 365, Odoo,
+          security monitoring, cloud, automation, and interview preparation.
         </p>
-        <div class="nav-actions">
-          <a class="btn btn-green" href="#technical-notes">Start Reading</a>
-          <a class="btn btn-dark" href="#pages">View All Pages</a>
+        <div class="hero-actions">
+          <a class="btn btn-brand" href="#posts">📖 Start Reading</a>
+          <a class="btn btn-ghost" href="#topics">Browse Topics →</a>
         </div>
-      </section>
-
-      <section class="section" id="technical-notes">
-        <div class="section-title">
-          <h2>Technical Notes</h2>
-          <p>
-            These notes are written for practical IT work: clear steps, real troubleshooting,
-            security planning, infrastructure design, and easy revision.
-          </p>
+        <div class="stats">
+          <div class="stat"><b id="statPosts">6</b><span>Posts &amp; notes</span></div>
+          <div class="stat"><b>8</b><span>Topic areas</span></div>
+          <div class="stat"><b id="statUpdated">2026</b><span>Last updated</span></div>
         </div>
+      </div>
 
-        <article class="featured">
+      <div class="terminal" aria-hidden="true">
+        <div class="term-bar"><i></i><i></i><i></i><span>basim@notes:~</span></div>
+        <div class="term-body" id="term"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="block reveal" id="topics">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Explore</p>
+          <h2>Topics I write about</h2>
+          <p>Notes for practical IT work: clear steps, real troubleshooting, security planning, infrastructure design, and easy revision.</p>
+        </div>
+      </div>
+      <div class="topics" id="topicGrid">
+        <button class="topic" data-cat="networking" id="networking" style="--c:var(--c-net)"><span class="count"></span><div class="ico">🌐</div><h3>Networking</h3><p>VLANs, routing, firewall policies, DNS, DHCP, switching, access points, LACP and troubleshooting.</p></button>
+        <button class="topic" data-cat="servers" id="servers" style="--c:var(--c-srv)"><span class="count"></span><div class="ico">🖥️</div><h3>Servers &amp; Proxmox</h3><p>VM design, backup planning, storage checks, Dell iDRAC, Linux server setup and restore procedures.</p></button>
+        <button class="topic" data-cat="security" id="security" style="--c:var(--c-sec)"><span class="count"></span><div class="ico">🔐</div><h3>Security</h3><p>Firewall rules, endpoint protection, Wazuh SIEM, Suricata IDS, hardening, USB control and data protection.</p></button>
+        <button class="topic" data-cat="cloud" id="cloud" style="--c:var(--c-cld)"><span class="count"></span><div class="ico">☁️</div><h3>Cloud &amp; Microsoft 365</h3><p>M365 administration, Entra ID, MFA, mail security, Azure basics, domains and account protection.</p></button>
+        <button class="topic" data-cat="odoo" id="odoo" style="--c:var(--c-erp)"><span class="count"></span><div class="ico">🧩</div><h3>Odoo &amp; ERP</h3><p>Odoo Online and Community, approvals, record rules, CRM customization, timesheets and API integration.</p></button>
+        <button class="topic" data-cat="automation" id="automation" style="--c:var(--c-aut)"><span class="count"></span><div class="ico">⚙️</div><h3>Automation</h3><p>n8n workflows, Teams notifications, Odoo API automation, scheduled reminders and reporting.</p></button>
+        <button class="topic" data-cat="database" id="database" style="--c:var(--c-db)"><span class="count"></span><div class="ico">🗄️</div><h3>Database &amp; Storage</h3><p>SQL, joins, indexes, PostgreSQL, backups, NAS, RAID concepts and capacity planning.</p></button>
+        <button class="topic" data-cat="interviews" id="interviews" style="--c:var(--c-int)"><span class="count"></span><div class="ico">🎯</div><h3>Technical Interviews</h3><p>System design, networking, Linux, databases, cloud, security questions and troubleshooting scenarios.</p></button>
+      </div>
+    </section>
+
+    <section class="block reveal" id="posts">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Fresh content</p>
+          <h2>Latest posts &amp; notes</h2>
+          <p>New notes and my latest LinkedIn posts, all in one place.</p>
+        </div>
+        <a class="btn btn-li" href="https://www.linkedin.com/in/basimvilayur/recent-activity/all/" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          All LinkedIn activity
+        </a>
+      </div>
+
+      <div class="toolbar">
+        <div class="chips" id="chips"></div>
+        <label class="search">🔎<input id="q" type="search" placeholder="Search notes…" aria-label="Search notes" /></label>
+      </div>
+
+      <div class="posts" id="postGrid">
+        <noscript><p class="empty">Enable JavaScript to see the latest posts.</p></noscript>
+      </div>
+      <div class="more-wrap"><button class="btn btn-outline" id="moreBtn" hidden>Show more</button></div>
+    </section>
+
+    <section class="block reveal" id="path">
+      <div class="path">
+        <p class="kicker">Recommended</p>
+        <div class="sec-head" style="margin-bottom:26px">
           <div>
-            <span class="badge blue">Featured</span>
-            <h3>Recommended Technical Learning Path</h3>
-            <p>
-              Start with networking basics, then learn Linux, servers, virtualization,
-              firewall rules, Microsoft 365 security, monitoring, backup, and automation.
-            </p>
-            <a class="readmore" href="#pages">Read all topics →</a>
-          </div>
-          <div class="thumb">TECH<br />NOTES<br />2026</div>
-        </article>
-      </section>
-
-      <section class="section" id="posts">
-        <div class="section-title">
-          <h2>Latest Posts</h2>
-          <p>All cards and buttons are clickable. Later you can replace # links with your real GitHub page URLs.</p>
-        </div>
-
-        <div class="grid">
-          <article class="post blue">
-            <div class="tags">
-              <span class="badge pink">Networking</span>
-              <span class="badge green">VLAN</span>
-            </div>
-            <h3>Office VLAN Design for Better Security</h3>
-            <p>How to separate staff, servers, guest WiFi, CCTV, IP phones, and management networks using VLANs and firewall rules.</p>
-            <a class="readmore" href="#networking">Read note →</a>
-          </article>
-
-          <article class="post green">
-            <div class="tags">
-              <span class="badge blue">Servers</span>
-              <span class="badge purple">Proxmox</span>
-            </div>
-            <h3>Proxmox Backup and Restore Planning</h3>
-            <p>Simple backup strategy for VMs, storage planning, restore testing, and avoiding single points of failure.</p>
-            <a class="readmore" href="#servers">Read note →</a>
-          </article>
-
-          <article class="post yellow">
-            <div class="tags">
-              <span class="badge yellow">Security</span>
-              <span class="badge green">Wazuh</span>
-            </div>
-            <h3>Security Monitoring with Wazuh</h3>
-            <p>Basic SIEM monitoring, endpoint agents, Microsoft 365 alerts, log review, and incident visibility for small offices.</p>
-            <a class="readmore" href="#security">Read note →</a>
-          </article>
-
-          <article class="post pink">
-            <div class="tags">
-              <span class="badge blue">Cloud</span>
-              <span class="badge green">Microsoft 365</span>
-            </div>
-            <h3>Microsoft 365 Security Checklist</h3>
-            <p>MFA, secure admin accounts, conditional access planning, mailbox protection, audit logs, and data sharing controls.</p>
-            <a class="readmore" href="#cloud">Read note →</a>
-          </article>
-
-          <article class="post blue">
-            <div class="tags">
-              <span class="badge purple">ERP</span>
-              <span class="badge green">Odoo</span>
-            </div>
-            <h3>Odoo Customization Notes</h3>
-            <p>Practical ideas for approvals, record rules, timesheets, CRM visibility, and employee workflow improvements.</p>
-            <a class="readmore" href="#odoo">Read note →</a>
-          </article>
-
-          <article class="post green">
-            <div class="tags">
-              <span class="badge yellow">Automation</span>
-              <span class="badge blue">n8n</span>
-            </div>
-            <h3>Business Automation with n8n</h3>
-            <p>Automating reminders, reports, approvals, Microsoft 365 workflows, Odoo API checks, and Teams notifications.</p>
-            <a class="readmore" href="#automation">Read note →</a>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="pages">
-        <div class="section-title">
-          <h2>All Pages</h2>
-          <p>Use these sections as your website pages. Every left-side category link opens the correct section.</p>
-        </div>
-
-        <div class="grid">
-          <div class="info-card blue" id="networking">
-            <h3>Networking</h3>
-            <p>
-              Notes about VLANs, routing, firewall policies, DNS, DHCP, switching, access points,
-              trunk ports, LACP, network segmentation, and troubleshooting.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
-          </div>
-
-          <div class="info-card green" id="servers">
-            <h3>Servers and Proxmox</h3>
-            <p>
-              Proxmox VM design, backup planning, storage checks, Dell iDRAC notes, Linux server setup,
-              service troubleshooting, and restore procedures.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
-          </div>
-
-          <div class="info-card yellow" id="security">
-            <h3>Security</h3>
-            <p>
-              Firewall rules, endpoint protection, Wazuh SIEM, Suricata IDS, log review, hardening,
-              USB control, data protection, and network access restrictions.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
-          </div>
-
-          <div class="info-card pink" id="cloud">
-            <h3>Cloud and Microsoft 365</h3>
-            <p>
-              Microsoft 365 administration, Entra ID, MFA, mail security, Azure basics, cloud monitoring,
-              domain management, and user account protection.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
-          </div>
-
-          <div class="info-card purple" id="odoo">
-            <h3>Odoo and ERP</h3>
-            <p>
-              Odoo Online, Odoo Community, approvals, record rules, CRM customization, timesheet workflows,
-              employee access control, and API integration.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
-          </div>
-
-          <div class="info-card blue" id="automation">
-            <h3>Automation</h3>
-            <p>
-              n8n workflows, Microsoft Teams notifications, Odoo API automation, scheduled reminders,
-              reporting workflows, and rule-based process automation.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
-          </div>
-
-          <div class="info-card green" id="database">
-            <h3>Database and Storage</h3>
-            <p>
-              SQL basics, joins, indexes, PostgreSQL, backup planning, NAS usage, RAID concepts,
-              storage monitoring, and capacity planning.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
-          </div>
-
-          <div class="info-card yellow" id="interviews">
-            <h3>Technical Interviews</h3>
-            <p>
-              System design, networking questions, Linux fundamentals, database concepts,
-              cloud basics, security questions, and troubleshooting scenarios.
-            </p>
-            <a class="readmore" href="#posts">Back to posts →</a>
+            <h2>Technical learning path</h2>
+            <p>Start with the foundations and build up. Each step builds on the previous one.</p>
           </div>
         </div>
-      </section>
-
-      <section class="contact-box" id="contact">
-        <h2>Contact Basim Mohammed</h2>
-        <p>
-          For technical notes, IT guides, project discussions, or collaboration,
-          you can contact me by email or follow my official social media pages.
-        </p>
-
-        <a class="email-link" href="mailto:info@basimvilayur.com">info@basimvilayur.com</a>
-
-        <div class="share" style="justify-content:center;">
-          <a href="https://www.linkedin.com/in/basimvilayur/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://x.com/basimvilayur" target="_blank" rel="noopener">X / Twitter</a>
-          <a href="https://www.facebook.com/basimvilayur" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://www.instagram.com/basimvilayur/" target="_blank" rel="noopener">Instagram</a>
+        <div class="steps">
+          <div class="step">Networking basics</div>
+          <div class="step">Linux</div>
+          <div class="step">Servers</div>
+          <div class="step">Virtualization</div>
+          <div class="step">Firewall rules</div>
+          <div class="step">M365 security</div>
+          <div class="step">Monitoring &amp; backup</div>
+          <div class="step">Automation</div>
         </div>
-      </section>
+      </div>
+    </section>
+
+    <section class="cta reveal" id="contact">
+      <div class="glow g1"></div><div class="glow g2"></div>
+      <h2>Let's talk tech</h2>
+      <p>For technical notes, IT guides, project discussions, or collaboration, reach out by email or connect on social media.</p>
+      <a class="btn btn-brand" href="mailto:info@basimvilayur.com">✉️ info@basimvilayur.com</a>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/basimvilayur/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+        <a href="https://x.com/basimvilayur" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg></a>
+        <a href="https://www.facebook.com/basimvilayur" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+        <a href="https://www.instagram.com/basimvilayur/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
+      </div>
     </section>
   </main>
 
   <footer>
-    © 2026 Basim Mohammed. All rights reserved. | Email: <a href="mailto:info@basimvilayur.com">info@basimvilayur.com</a>
+    <div class="wrap">
+      <span>© <span id="year">2026</span> Basim Mohammed. All rights reserved.</span>
+      <a href="mailto:info@basimvilayur.com">info@basimvilayur.com</a>
+    </div>
   </footer>
+
+  <script>
+    (function () {
+      var CATS = {
+        networking: { label: "Networking", color: "var(--c-net)" },
+        servers:    { label: "Servers",    color: "var(--c-srv)" },
+        security:   { label: "Security",   color: "var(--c-sec)" },
+        cloud:      { label: "Cloud",      color: "var(--c-cld)" },
+        odoo:       { label: "Odoo & ERP", color: "var(--c-erp)" },
+        automation: { label: "Automation", color: "var(--c-aut)" },
+        database:   { label: "Database",   color: "var(--c-db)" },
+        interviews: { label: "Interviews", color: "var(--c-int)" }
+      };
+      var PAGE = 9;
+      var posts = [], filter = "all", query = "", shown = PAGE;
+
+      var grid = document.getElementById("postGrid");
+      var chips = document.getElementById("chips");
+      var moreBtn = document.getElementById("moreBtn");
+
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+      function safeUrl(u) { return /^https:\/\//i.test(u || "") ? u : ""; }
+      function fmtDate(d) {
+        if (!d) return "";
+        var t = new Date(d + "T00:00:00");
+        return isNaN(t) ? "" : t.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+      }
+
+      function card(p, i) {
+        var cat = CATS[p.category] || { label: "Notes", color: "var(--brand)" };
+        var li = p.source === "linkedin";
+        var url = safeUrl(p.url);
+        var src = li
+          ? '<span class="src li">● LinkedIn</span>'
+          : '<span class="src">📝 Note</span>';
+        var link = url
+          ? '<a class="readmore" href="' + esc(url) + '" target="_blank" rel="noopener">' + (li ? "Read on LinkedIn" : "Read note") + ' →</a>'
+          : '<a class="readmore" href="#' + esc(p.category || "topics") + '">Explore ' + esc(cat.label) + ' →</a>';
+        var tags = (p.tags || []).map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("");
+        return '<article class="post" style="--c:' + cat.color + ';animation-delay:' + (i % PAGE) * 40 + 'ms">' +
+          '<div class="post-meta">' + src + "<span>" + esc(fmtDate(p.date)) + "</span></div>" +
+          (tags ? '<div class="tags">' + tags + "</div>" : "") +
+          "<h3>" + esc(p.title) + "</h3>" +
+          "<p>" + esc(p.summary) + "</p>" + link + "</article>";
+      }
+
+      function matches(p) {
+        if (filter === "linkedin" && p.source !== "linkedin") return false;
+        if (filter !== "all" && filter !== "linkedin" && p.category !== filter) return false;
+        if (!query) return true;
+        var hay = [p.title, p.summary, (p.tags || []).join(" ")].join(" ").toLowerCase();
+        return hay.indexOf(query) !== -1;
+      }
+
+      function render() {
+        var list = posts.filter(matches);
+        grid.innerHTML = list.length
+          ? list.slice(0, shown).map(card).join("")
+          : '<p class="empty">No posts match yet — check back soon.</p>';
+        moreBtn.hidden = list.length <= shown;
+      }
+
+      function renderChips() {
+        var items = [["all", "All"]];
+        if (posts.some(function (p) { return p.source === "linkedin"; })) items.push(["linkedin", "LinkedIn"]);
+        Object.keys(CATS).forEach(function (k) {
+          if (posts.some(function (p) { return p.category === k; })) items.push([k, CATS[k].label]);
+        });
+        chips.innerHTML = items.map(function (it) {
+          return '<button class="chip' + (it[0] === filter ? " active" : "") + '" data-f="' + it[0] + '">' + esc(it[1]) + "</button>";
+        }).join("");
+      }
+
+      function setFilter(f) {
+        filter = f; shown = PAGE;
+        renderChips(); render();
+      }
+
+      chips.addEventListener("click", function (e) {
+        var b = e.target.closest(".chip");
+        if (b) setFilter(b.dataset.f);
+      });
+      document.getElementById("topicGrid").addEventListener("click", function (e) {
+        var t = e.target.closest(".topic");
+        if (!t) return;
+        if (!posts.some(function (p) { return p.category === t.dataset.cat; })) return;
+        setFilter(t.dataset.cat);
+        document.getElementById("posts").scrollIntoView();
+      });
+      document.getElementById("q").addEventListener("input", function (e) {
+        query = e.target.value.trim().toLowerCase(); shown = PAGE; render();
+      });
+      moreBtn.addEventListener("click", function () { shown += PAGE; render(); });
+
+      fetch("posts.json", { cache: "no-cache" })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          // Newest first; undated entries keep their order at the end.
+          posts = data.map(function (p, i) { p._i = i; return p; }).sort(function (a, b) {
+            if (a.date && b.date) return a.date < b.date ? 1 : a.date > b.date ? -1 : a._i - b._i;
+            if (a.date) return -1;
+            if (b.date) return 1;
+            return a._i - b._i;
+          });
+          document.getElementById("statPosts").textContent = posts.length;
+          var latest = posts.filter(function (p) { return p.date; })[0];
+          if (latest) {
+            var d = new Date(latest.date + "T00:00:00");
+            if (!isNaN(d)) document.getElementById("statUpdated").textContent = d.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
+          }
+          document.querySelectorAll(".topic").forEach(function (t) {
+            var n = posts.filter(function (p) { return p.category === t.dataset.cat; }).length;
+            t.querySelector(".count").textContent = n ? n + (n === 1 ? " post" : " posts") : "Soon";
+          });
+          renderChips(); render();
+        })
+        .catch(function () {
+          grid.innerHTML = '<p class="empty">Couldn\'t load posts right now. Please refresh.</p>';
+        });
+
+      // Nav: background on scroll + mobile menu
+      var topbar = document.getElementById("topbar");
+      function onScroll() { topbar.classList.toggle("scrolled", window.scrollY > 30); }
+      window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+      var menuBtn = document.getElementById("menuBtn"), navLinks = document.getElementById("navLinks");
+      menuBtn.addEventListener("click", function () {
+        var open = navLinks.classList.toggle("open");
+        menuBtn.setAttribute("aria-expanded", open);
+      });
+      navLinks.addEventListener("click", function () { navLinks.classList.remove("open"); });
+
+      // Reveal on scroll
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+      } else {
+        document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+      }
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Typing terminal
+      var lines = [
+        ['<span class="p">$</span> ', 'whoami'],
+        ['', 'basim — IT infrastructure &amp; security'],
+        ['<span class="p">$</span> ', 'ls ~/notes'],
+        ['', '<span class="k">networking/  proxmox/  security/\ncloud-m365/  odoo/  automation/</span>'],
+        ['<span class="p">$</span> ', 'systemctl status learning'],
+        ['', '<span class="ok">● active (running)</span> since day one'],
+        ['<span class="p">$</span> ', '']
+      ];
+      var term = document.getElementById("term");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) {
+        term.innerHTML = lines.map(function (l) { return l[0] + l[1]; }).join("\n") + '<span class="cursor"></span>';
+      } else {
+        var out = "", li = 0;
+        (function next() {
+          if (li >= lines.length) { term.innerHTML = out + '<span class="cursor"></span>'; return; }
+          var pre = lines[li][0], txt = lines[li][1];
+          if (!pre) { out += txt + "\n"; li++; term.innerHTML = out; return setTimeout(next, 260); }
+          out += pre; var c = 0;
+          (function type() {
+            if (c <= txt.length) {
+              term.innerHTML = out + txt.slice(0, c) + '<span class="cursor"></span>'; c++;
+              return setTimeout(type, 55);
+            }
+            out += txt + (txt ? "\n" : ""); li++; setTimeout(next, 320);
+          })();
+        })();
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+name: Add LinkedIn post to website
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "LinkedIn post link (Share → Copy link)"
+        required: true
+      title:
+        description: "Short title for the card"
+        required: true
+      summary:
+        description: "Post text or a short summary (2-3 lines)"
+        required: true
+      category:
+        description: "Topic"
+        required: true
+        type: choice
+        options: [networking, servers, security, cloud, odoo, automation, database, interviews]
+      tags:
+        description: "Tags, comma separated (e.g. Proxmox, Backup)"
+        required: false
+      date:
+        description: "Post date YYYY-MM-DD (leave empty for today)"
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Append post to posts.json
+        env:
+          P_URL: ${{ inputs.url }}
+          P_TITLE: ${{ inputs.title }}
+          P_SUMMARY: ${{ inputs.summary }}
+          P_CATEGORY: ${{ inputs.category }}
+          P_TAGS: ${{ inputs.tags }}
+          P_DATE: ${{ inputs.date }}
+        run: python3 .github/scripts/add_post.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add posts.json
+          git diff --cached --quiet && { echo "No change (already added)"; exit 0; }
+          git commit -m "Add LinkedIn post: ${P_TITLE:0:60}"
+          git push
+        env:
+          P_TITLE: ${{ inputs.title }}
