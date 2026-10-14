@@ -1,0 +1,41 @@
+name: New post
+description: Publish a post to the website (and LinkedIn)
+title: "Post title here"
+body:
+  - type: textarea
+    id: text
+    attributes:
+      label: Post text
+      description: Written exactly as it should appear on LinkedIn. Line breaks and #hashtags are kept.
+    validations:
+      required: true
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      options:
+        - networking
+        - servers
+        - security
+        - cloud
+        - odoo
+        - automation
+        - database
+        - interviews
+    validations:
+      required: true
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Comma separated, shown on the website card (e.g. Proxmox, Backup)
+  - type: dropdown
+    id: linkedin
+    attributes:
+      label: Also post on LinkedIn?
+      options:
+        - "Yes"
+        - "No"
+      default: 0
+    validations:
+      required: true

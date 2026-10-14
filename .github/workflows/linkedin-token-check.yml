@@ -1,0 +1,30 @@
+name: LinkedIn token check
+
+# LinkedIn tokens expire after 60 days. This checks weekly and opens a reminder issue when it stops working.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check token
+        env:
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          [ -z "$LINKEDIN_TOKEN" ] && { echo "No token set yet"; exit 0; }
+          code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $LINKEDIN_TOKEN" https://api.linkedin.com/v2/userinfo)
+          echo "LinkedIn returned $code"
+          [ "$code" = "200" ] && exit 0
+          title="LinkedIn token expired - renew it"
+          if [ -z "$(gh issue list --state open --search "\"$title\" in:title" --json number -q '.[0].number')" ]; then
+            gh issue create --title "$title" --body "Posting to LinkedIn will fail until the token is renewed. Follow the 'Renew LinkedIn token' steps in the README, then close this issue."
+          fi
+          exit 1

@@ -1,0 +1,57 @@
+name: Publish post
+
+on:
+  issues:
+    types: [opened, reopened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: posts-json
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Only "New post" forms opened by the repo owner; anyone else's issues are ignored.
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      contains(github.event.issue.body, '### Post text')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Post to LinkedIn and add to posts.json
+        id: publish
+        env:
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+        run: python3 .github/scripts/publish_post.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add posts.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish post #${{ github.event.issue.number }}"
+          git pull --rebase
+          git push
+
+      - name: Report and close
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUM: ${{ github.event.issue.number }}
+          OUTCOME: ${{ job.status }}
+          LI_URL: ${{ steps.publish.outputs.linkedin_url }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ "$OUTCOME" = "success" ]; then
+            msg="✅ Published on the website: https://www.basimvilayur.com/#posts (live in about a minute)"
+            [ -n "$LI_URL" ] && msg="$msg"$'\n'"✅ Posted on LinkedIn: $LI_URL"
+            gh issue comment "$NUM" --body "$msg"
+            gh issue close "$NUM"
+          else
+            gh issue comment "$NUM" --body "❌ Publishing failed. Details: $RUN_URL"$'\n'"Fix the problem, then **Reopen** this issue to try again."
+          fi
