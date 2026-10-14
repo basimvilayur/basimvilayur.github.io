@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       url:
-        description: "LinkedIn post link (Share → Copy link)"
+        description: "LinkedIn post link (Share → Copy link; lnkd.in links work too)"
         required: true
       title:
         description: "Short title for the card"
         required: true
       summary:
-        description: "Post text or a short summary (2-3 lines)"
-        required: true
+        description: "Post text or a short summary (optional)"
+        required: false
       category:
         description: "Topic"
         required: true
