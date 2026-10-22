@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.basimvilayur.com/sitemap-index.xml
+Sitemap: https://basimvilayur.com/sitemap-index.xml

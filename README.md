@@ -1,6 +1,6 @@
 # basimvilayur.github.io
 
-Source for https://www.basimvilayur.com, built with [Astro](https://astro.build) and deployed to
+Source for https://basimvilayur.com, built with [Astro](https://astro.build) and deployed to
 GitHub Pages by the **Deploy website** workflow on every push to `main`.
 
 Pages: home, `/posts/` (searchable list), `/posts/<name>/` (one page per post), `/topics/`,

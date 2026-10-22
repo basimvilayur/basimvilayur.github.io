@@ -52,7 +52,7 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           if [ "$OUTCOME" = "success" ]; then
-            msg="✅ Published on the website: https://www.basimvilayur.com/#posts (live in about a minute)"
+            msg="✅ Published on the website: https://basimvilayur.com/posts/ (live in about a minute)"
             [ -n "$LI_URL" ] && msg="$msg"$'\n'"✅ Posted on LinkedIn: $LI_URL"
             gh issue comment "$NUM" --body "$msg"
             gh issue close "$NUM"
