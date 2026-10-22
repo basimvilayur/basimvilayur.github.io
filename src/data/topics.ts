@@ -4,37 +4,37 @@ export const TOPIC_IDS = [
 
 export type TopicId = (typeof TOPIC_IDS)[number];
 
-export const TOPICS: Record<TopicId, { label: string; short: string; icon: string; color: string; description: string }> = {
+export const TOPICS: Record<TopicId, { label: string; short: string; description: string }> = {
   networking: {
-    label: 'Networking', short: 'Networking', icon: '🌐', color: 'var(--c-net)',
+    label: 'Networking', short: 'Networking',
     description: 'VLANs, routing, firewall policies, DNS, DHCP, switching, access points, LACP and troubleshooting.',
   },
   servers: {
-    label: 'Servers & Proxmox', short: 'Servers', icon: '🖥️', color: 'var(--c-srv)',
+    label: 'Servers & Proxmox', short: 'Servers',
     description: 'VM design, backup planning, storage checks, Dell iDRAC, Linux server setup and restore procedures.',
   },
   security: {
-    label: 'Security', short: 'Security', icon: '🔐', color: 'var(--c-sec)',
+    label: 'Security', short: 'Security',
     description: 'Firewall rules, endpoint protection, Wazuh SIEM, Suricata IDS, hardening, USB control and data protection.',
   },
   cloud: {
-    label: 'Cloud & Microsoft 365', short: 'Cloud', icon: '☁️', color: 'var(--c-cld)',
+    label: 'Cloud & Microsoft 365', short: 'Cloud',
     description: 'M365 administration, Entra ID, MFA, mail security, Azure basics, domains and account protection.',
   },
   odoo: {
-    label: 'Odoo & ERP', short: 'Odoo & ERP', icon: '🧩', color: 'var(--c-erp)',
+    label: 'Odoo & ERP', short: 'Odoo & ERP',
     description: 'Odoo Online and Community, approvals, record rules, CRM customization, timesheets and API integration.',
   },
   automation: {
-    label: 'Automation', short: 'Automation', icon: '⚙️', color: 'var(--c-aut)',
+    label: 'Automation', short: 'Automation',
     description: 'n8n workflows, Teams notifications, Odoo API automation, scheduled reminders and reporting.',
   },
   database: {
-    label: 'Database & Storage', short: 'Database', icon: '🗄️', color: 'var(--c-db)',
+    label: 'Database & Storage', short: 'Database',
     description: 'SQL, joins, indexes, PostgreSQL, backups, NAS, RAID concepts and capacity planning.',
   },
   interviews: {
-    label: 'Technical Interviews', short: 'Interviews', icon: '🎯', color: 'var(--c-int)',
+    label: 'Technical Interviews', short: 'Interviews',
     description: 'System design, networking, Linux, databases, cloud, security questions and troubleshooting scenarios.',
   },
 };

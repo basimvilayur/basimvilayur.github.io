@@ -29,7 +29,8 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#0b1220" />
+    <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#050a18" media="(prefers-color-scheme: dark)" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -41,7 +42,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet" />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <script is:inline>document.documentElement.classList.remove('no-js');</script>
   </head>
@@ -54,7 +55,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
         </nav>
         <div class="nav-right">
           <a class="btn btn-brand" href={SITE.linkedin} target="_blank" rel="noopener">Follow on LinkedIn</a>
-          <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+          <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
         </div>
       </div>
     </header>

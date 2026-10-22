@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { TOPICS } from '../data/topics';
 import { excerpt, formatDate, postUrl, type Post } from '../data/posts';
 
@@ -10,19 +11,21 @@ const searchText = [post.data.title, post.data.summary, post.data.tags.join(' ')
 ---
 <article
   class="post"
-  style={`--c:${topic.color}`}
   data-category={post.data.category}
   data-source={fromLinkedIn ? 'linkedin' : 'note'}
   data-text={searchText}
 >
-  <div class="post-meta">
-    {fromLinkedIn ? <span class="src li">● LinkedIn</span> : <span class="src">{topic.icon} {topic.short}</span>}
-    <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+  <div class="post-top">
+    <span class="ico" title={topic.label}><Icon name={post.data.category} /></span>
+    <div class="post-meta">
+      {fromLinkedIn ? <span class="src li">LinkedIn</span> : <span class="src">{topic.short}</span>}
+      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+    </div>
   </div>
+  <h3><a href={postUrl(post)}>{post.data.title}</a></h3>
+  <p>{excerpt(post)}</p>
   {post.data.tags.length > 0 && (
     <div class="tags">{post.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
   )}
-  <h3><a href={postUrl(post)}>{post.data.title}</a></h3>
-  <p>{excerpt(post)}</p>
-  <span class="readmore">Read post →</span>
+  <span class="readmore">Read post <Icon name="arrow" /></span>
 </article>

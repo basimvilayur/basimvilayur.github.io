@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostCard from '../../components/PostCard.astro';
+import Icon from '../../components/Icon.astro';
 import { TOPICS, TOPIC_IDS } from '../../data/topics';
 import { getPosts } from '../../data/posts';
 
@@ -10,9 +11,8 @@ const hasLinkedIn = posts.some((p) => p.data.linkedin);
 ---
 <Base title="All posts" description="Every technical note and LinkedIn post by Basim Mohammed, searchable by topic.">
   <section class="page-head">
-    <div class="glow g1"></div><div class="glow g2"></div>
     <div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Posts</span></nav>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Posts</span></nav>
       <h1>All posts</h1>
       <p>{posts.length} notes and LinkedIn posts on networking, servers, security, cloud, ERP and automation.</p>
     </div>
@@ -26,7 +26,7 @@ const hasLinkedIn = posts.some((p) => p.data.linkedin);
           {hasLinkedIn && <button class="chip" data-f="linkedin">LinkedIn</button>}
           {usedTopics.map((id) => <button class="chip" data-f={id}>{TOPICS[id].short}</button>)}
         </div>
-        <label class="search">🔎<input id="q" type="search" placeholder="Search posts…" aria-label="Search posts" /></label>
+        <label class="search"><Icon name="search" /><input id="q" type="search" placeholder="Search posts…" aria-label="Search posts" /></label>
       </div>
       <div class="posts" id="grid">
         {posts.map((post) => <PostCard post={post} />)}

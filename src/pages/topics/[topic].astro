@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostCard from '../../components/PostCard.astro';
+import Icon from '../../components/Icon.astro';
 import { TOPICS, TOPIC_IDS, type TopicId } from '../../data/topics';
 import { getPosts } from '../../data/posts';
 
@@ -13,11 +14,11 @@ const t = TOPICS[id];
 const posts = (await getPosts()).filter((p) => p.data.category === id);
 ---
 <Base title={t.label} description={`${t.label} notes by Basim Mohammed: ${t.description}`}>
-  <section class="page-head" style={`--c:${t.color}`}>
-    <div class="glow g1"></div><div class="glow g2"></div>
+  <section class="page-head">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/topics/">Topics</a> / <span>{t.label}</span></nav>
-      <h1>{t.icon} {t.label}</h1>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/topics/">Topics</a> <span aria-hidden="true">/</span> <span>{t.label}</span></nav>
+      <div class="ico head-ico"><Icon name={id} /></div>
+      <h1>{t.label}</h1>
       <p>{t.description}</p>
     </div>
   </section>
@@ -28,7 +29,7 @@ const posts = (await getPosts()).filter((p) => p.data.category === id);
           ? posts.map((post) => <PostCard post={post} />)
           : <p class="empty">No posts on this topic yet — check back soon.</p>}
       </div>
-      <div class="center"><a class="btn btn-outline" href="/topics/">← All topics</a></div>
+      <div class="center"><a class="btn btn-outline" href="/topics/">All topics</a></div>
     </section>
   </div>
 </Base>

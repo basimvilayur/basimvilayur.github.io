@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
 import { TOPICS, TOPIC_IDS } from '../../data/topics';
 import { getPosts } from '../../data/posts';
 
@@ -8,9 +9,8 @@ const countFor = (id: string) => posts.filter((p) => p.data.category === id).len
 ---
 <Base title="Topics" description="Browse Basim Mohammed's technical notes by topic: networking, servers, security, cloud, ERP, automation, databases and interviews.">
   <section class="page-head">
-    <div class="glow g1"></div><div class="glow g2"></div>
     <div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Topics</span></nav>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>Topics</span></nav>
       <h1>Topics</h1>
       <p>Pick an area to see every note and post about it.</p>
     </div>
@@ -22,9 +22,9 @@ const countFor = (id: string) => posts.filter((p) => p.data.category === id).len
           const t = TOPICS[id];
           const n = countFor(id);
           return (
-            <a class="topic" href={`/topics/${id}/`} style={`--c:${t.color}`}>
+            <a class="topic" href={`/topics/${id}/`}>
               <span class="count">{n ? `${n} ${n === 1 ? 'post' : 'posts'}` : 'Soon'}</span>
-              <div class="ico">{t.icon}</div>
+              <div class="ico"><Icon name={id} /></div>
               <h3>{t.label}</h3>
               <p>{t.description}</p>
             </a>

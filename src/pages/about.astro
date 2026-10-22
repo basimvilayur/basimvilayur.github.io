@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import Socials from '../components/Socials.astro';
+import Icon from '../components/Icon.astro';
 import { SITE, TOPICS, TOPIC_IDS } from '../data/topics';
 ---
 <Base title="About" description="About Basim Mohammed: IT infrastructure, networking, security and automation notes, and how to get in touch.">
   <section class="page-head">
-    <div class="glow g1"></div><div class="glow g2"></div>
     <div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>About</span></nav>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <span>About</span></nav>
       <h1>About me</h1>
       <p>Hi, I'm Basim Mohammed. I write practical notes from real IT work.</p>
     </div>
@@ -36,20 +36,19 @@ import { SITE, TOPICS, TOPIC_IDS } from '../data/topics';
         <h3>Get in touch</h3>
         <p style="color:var(--muted);margin:0 0 14px">For technical notes, IT guides, project discussions, or collaboration.</p>
         <ul>
-          <li>✉️ <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-          <li>💼 <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
-          <li>𝕏 <a href={SITE.x} target="_blank" rel="noopener">X / Twitter</a></li>
-          <li>📘 <a href={SITE.facebook} target="_blank" rel="noopener">Facebook</a></li>
-          <li>📸 <a href={SITE.instagram} target="_blank" rel="noopener">Instagram</a></li>
+          <li><Icon name="mail" /> <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li><Icon name="linkedin" /> <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><Icon name="arrow" /> <a href={SITE.x} target="_blank" rel="noopener">X / Twitter</a></li>
+          <li><Icon name="arrow" /> <a href={SITE.facebook} target="_blank" rel="noopener">Facebook</a></li>
+          <li><Icon name="arrow" /> <a href={SITE.instagram} target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </aside>
     </section>
 
     <section class="cta">
-      <div class="glow g1"></div><div class="glow g2"></div>
       <h2>Let's talk tech</h2>
       <p>Have a question about a note, or a project in mind? Send me a message.</p>
-      <a class="btn btn-brand" href={`mailto:${SITE.email}`}>✉️ {SITE.email}</a>
+      <a class="btn btn-white" href={`mailto:${SITE.email}`}><Icon name="mail" /> {SITE.email}</a>
       <Socials />
     </section>
   </div>
