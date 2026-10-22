@@ -1,13 +1,27 @@
 # basimvilayur.github.io
 
-Source for https://www.basimvilayur.com
+Source for https://www.basimvilayur.com, built with [Astro](https://astro.build) and deployed to
+GitHub Pages by the **Deploy website** workflow on every push to `main`.
 
-## Publishing a new post (website + LinkedIn in one go)
+Pages: home, `/posts/` (searchable list), `/posts/<name>/` (one page per post), `/topics/`,
+`/topics/<topic>/`, `/about/`, plus `/rss.xml` and a sitemap.
+
+Every post is a Markdown file in `src/content/posts/`.
+
+## Writing and editing posts in the browser (Pages CMS)
+
+1. Go to https://app.pagescms.org and sign in with GitHub (as `basimvilayur`).
+2. Open this repository → **Posts**. Add a new post or edit an existing one with the visual editor,
+   upload images, and save. Saving commits to `main`, and the site updates in about a minute.
+
+Tick **Draft** to keep a post off the website while you work on it.
+
+## Publishing a new post to LinkedIn and the website in one go
 
 Open https://github.com/basimvilayur/basimvilayur.github.io/issues/new?template=new-post.yml
 (or in the GitHub app: **Issues → New → New post**), then:
 
-- **Title** → the website card title
+- **Title** → the website post title
 - **Post text** → written exactly as it should appear on LinkedIn (line breaks and #hashtags kept)
 - **Topic**, **Tags**, and **Also post on LinkedIn?**
 
@@ -36,26 +50,32 @@ A weekly check opens a reminder issue when the token stops working.
 ## Adding a post you already made on LinkedIn
 
 1. On LinkedIn, open your post → **⋯ → Copy link to post**.
-2. On GitHub (web or mobile app): **Actions → Add LinkedIn post to website → Run workflow**.
+2. On GitHub: **Actions → Add LinkedIn post to website → Run workflow**.
 3. Paste the link, a short title, the post text, pick a topic, and run.
 
-The workflow adds the post to `posts.json` and the site updates in about a minute.
 Posting the same link twice is ignored.
 
-## Editing posts by hand
+## Post file format
 
-All posts and notes live in `posts.json`. Each entry:
+```markdown
+---
+title: "Post title"
+date: 2026-10-22
+category: servers        # networking | servers | security | cloud | odoo | automation | database | interviews
+tags: ["Proxmox", "Backup"]
+summary: ""              # optional; card text (defaults to the start of the post)
+linkedin: ""             # optional; link to the LinkedIn version
+draft: false
+---
 
-```json
-{
-  "title": "Card title",
-  "summary": "2-3 line description",
-  "category": "networking | servers | security | cloud | odoo | automation | database | interviews",
-  "tags": ["Tag1", "Tag2"],
-  "source": "linkedin | note",
-  "date": "YYYY-MM-DD",
-  "url": "https://..."
-}
+The post itself, in Markdown.
 ```
 
-Newest dated entries show first.
+The file name becomes the page address: `proxmox-backup.md` → `/posts/proxmox-backup/`.
+
+## Working on the site locally
+
+```bash
+npm install
+npm run dev
+```

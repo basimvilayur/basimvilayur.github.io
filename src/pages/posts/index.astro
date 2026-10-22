@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { TOPICS, TOPIC_IDS } from '../../data/topics';
+import { getPosts } from '../../data/posts';
+
+const posts = await getPosts();
+const usedTopics = TOPIC_IDS.filter((id) => posts.some((p) => p.data.category === id));
+const hasLinkedIn = posts.some((p) => p.data.linkedin);
+---
+<Base title="All posts" description="Every technical note and LinkedIn post by Basim Mohammed, searchable by topic.">
+  <section class="page-head">
+    <div class="glow g1"></div><div class="glow g2"></div>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Posts</span></nav>
+      <h1>All posts</h1>
+      <p>{posts.length} notes and LinkedIn posts on networking, servers, security, cloud, ERP and automation.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="block">
+      <div class="toolbar">
+        <div class="chips" id="chips">
+          <button class="chip active" data-f="all">All</button>
+          {hasLinkedIn && <button class="chip" data-f="linkedin">LinkedIn</button>}
+          {usedTopics.map((id) => <button class="chip" data-f={id}>{TOPICS[id].short}</button>)}
+        </div>
+        <label class="search">🔎<input id="q" type="search" placeholder="Search posts…" aria-label="Search posts" /></label>
+      </div>
+      <div class="posts" id="grid">
+        {posts.map((post) => <PostCard post={post} />)}
+        <p class="empty" id="none" hidden>No posts match — try another topic or search.</p>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('#grid .post'));
+  const none = document.getElementById('none')!;
+  const chips = document.getElementById('chips')!;
+  const q = document.getElementById('q') as HTMLInputElement;
+  let filter = new URLSearchParams(location.search).get('topic') || 'all';
+
+  function apply() {
+    const text = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const c of cards) {
+      const okFilter = filter === 'all'
+        || (filter === 'linkedin' ? c.dataset.source === 'linkedin' : c.dataset.category === filter);
+      const ok = okFilter && (!text || (c.dataset.text ?? '').includes(text));
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    none.hidden = shown > 0;
+    chips.querySelectorAll<HTMLElement>('.chip').forEach((b) => b.classList.toggle('active', b.dataset.f === filter));
+  }
+
+  chips.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLElement>('.chip');
+    if (!b) return;
+    filter = b.dataset.f!;
+    apply();
+  });
+  q.addEventListener('input', apply);
+  apply();
+</script>

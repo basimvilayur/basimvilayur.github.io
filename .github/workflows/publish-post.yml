@@ -7,9 +7,10 @@ on:
 permissions:
   contents: write
   issues: write
+  actions: write
 
 concurrency:
-  group: posts-json
+  group: posts-content
   cancel-in-progress: false
 
 jobs:
@@ -22,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Post to LinkedIn and add to posts.json
+      - name: Post to LinkedIn and add to the website
         id: publish
         env:
           LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
@@ -32,11 +33,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add posts.json
+          git add src/content/posts
           git diff --cached --quiet && exit 0
           git commit -m "Publish post #${{ github.event.issue.number }}"
           git pull --rebase
           git push
+          gh workflow run deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Report and close
         if: always()

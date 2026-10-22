@@ -1,0 +1,168 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import Socials from '../components/Socials.astro';
+import { TOPICS, TOPIC_IDS, SITE } from '../data/topics';
+import { getPosts } from '../data/posts';
+
+const posts = await getPosts();
+const latest = posts.slice(0, 6);
+const countFor = (id: string) => posts.filter((p) => p.data.category === id).length;
+const updated = posts[0]?.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' }) ?? '';
+const steps = ['Networking basics', 'Linux', 'Servers', 'Virtualization', 'Firewall rules', 'M365 security', 'Monitoring & backup', 'Automation'];
+---
+<Base jsonLd={{ '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: Astro.site?.href }}>
+  <section class="hero">
+    <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+    <div class="wrap hero-inner">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> Technical Blog • IT Notes • Real-World Guides</span>
+        <h1>Practical technical notes by <span class="grad">Basim Mohammed</span></h1>
+        <p class="lead">
+          Simple, practical notes on networking, servers, Proxmox, firewalls, Microsoft 365, Odoo,
+          security monitoring, cloud, automation, and interview preparation.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-brand" href="/posts/">📖 Start Reading</a>
+          <a class="btn btn-ghost" href="/topics/">Browse Topics →</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>{posts.length}</b><span>Posts &amp; notes</span></div>
+          <div class="stat"><b>{TOPIC_IDS.length}</b><span>Topic areas</span></div>
+          {updated && <div class="stat"><b>{updated}</b><span>Last updated</span></div>}
+        </div>
+      </div>
+      <div class="terminal" aria-hidden="true">
+        <div class="term-bar"><i></i><i></i><i></i><span>basim@notes:~</span></div>
+        <div class="term-body" id="term"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="block reveal">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Explore</p>
+          <h2>Topics I write about</h2>
+          <p>Notes for practical IT work: clear steps, real troubleshooting, security planning, infrastructure design, and easy revision.</p>
+        </div>
+        <a class="btn btn-outline" href="/topics/">All topics →</a>
+      </div>
+      <div class="topics">
+        {TOPIC_IDS.map((id) => {
+          const t = TOPICS[id];
+          const n = countFor(id);
+          return (
+            <a class="topic" href={`/topics/${id}/`} style={`--c:${t.color}`}>
+              <span class="count">{n ? `${n} ${n === 1 ? 'post' : 'posts'}` : 'Soon'}</span>
+              <div class="ico">{t.icon}</div>
+              <h3>{t.label}</h3>
+              <p>{t.description}</p>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Fresh content</p>
+          <h2>Latest posts</h2>
+          <p>New notes and my latest LinkedIn posts, all in one place.</p>
+        </div>
+        <a class="btn btn-outline" href="/posts/">All posts →</a>
+      </div>
+      <div class="posts">
+        {latest.map((post) => <PostCard post={post} />)}
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <div class="path">
+        <p class="kicker">Recommended</p>
+        <div class="sec-head" style="margin-bottom:26px">
+          <div>
+            <h2>Technical learning path</h2>
+            <p>Start with the foundations and build up. Each step builds on the previous one.</p>
+          </div>
+        </div>
+        <ol class="steps">
+          {steps.map((s) => <li class="step">{s}</li>)}
+        </ol>
+      </div>
+    </section>
+
+    <section class="cta reveal">
+      <div class="glow g1"></div><div class="glow g2"></div>
+      <h2>Let's talk tech</h2>
+      <p>For technical notes, IT guides, project discussions, or collaboration, reach out by email or connect on social media.</p>
+      <a class="btn btn-brand" href={`mailto:${SITE.email}`}>✉️ {SITE.email}</a>
+      <Socials />
+    </section>
+  </div>
+</Base>
+
+<style>
+  .hero-inner { position: relative; display: grid; grid-template-columns: 1.25fr .9fr; gap: 48px; align-items: center; }
+  .hero h1 { margin: 0 0 18px; font-size: clamp(2.3rem, 5.4vw, 4rem); line-height: 1.04; letter-spacing: -.045em; font-weight: 900; }
+  .lead { margin: 0 0 28px; color: var(--hero-muted); font-size: 1.1rem; max-width: 600px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .stats { display: flex; gap: 28px; margin-top: 36px; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 1.6rem; font-weight: 850; letter-spacing: -.02em; color: #fff; }
+  .stat span { font-size: .82rem; color: var(--hero-muted); }
+  .terminal {
+    background: rgba(15, 22, 37, .82); border: 1px solid rgba(255, 255, 255, .1); border-radius: 16px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .45); font-family: "JetBrains Mono", Consolas, monospace; font-size: .84rem; overflow: hidden;
+  }
+  .term-bar { display: flex; gap: 7px; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.07); align-items: center; }
+  .term-bar i { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .term-bar i:nth-child(1) { background: #ff5f57; }
+  .term-bar i:nth-child(2) { background: #febc2e; }
+  .term-bar i:nth-child(3) { background: #28c840; }
+  .term-bar span { margin-left: 8px; color: #64748b; font-size: .76rem; }
+  .term-body { padding: 18px 18px 22px; line-height: 1.85; color: #cbd5e1; min-height: 250px; white-space: pre-wrap; }
+  .term-body :global(.p) { color: #34d399; }
+  .term-body :global(.k) { color: #38bdf8; }
+  .term-body :global(.ok) { color: #4ade80; }
+  .term-body :global(.cursor) { display: inline-block; width: 8px; height: 1.05em; background: #34d399; vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (max-width: 1000px) { .hero-inner { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .terminal { display: none; } }
+</style>
+
+<script>
+  const lines: [string, string][] = [
+    ['<span class="p">$</span> ', 'whoami'],
+    ['', 'basim — IT infrastructure &amp; security'],
+    ['<span class="p">$</span> ', 'ls ~/notes'],
+    ['', '<span class="k">networking/  proxmox/  security/\ncloud-m365/  odoo/  automation/</span>'],
+    ['<span class="p">$</span> ', 'systemctl status learning'],
+    ['', '<span class="ok">● active (running)</span> since day one'],
+    ['<span class="p">$</span> ', ''],
+  ];
+  const term = document.getElementById('term');
+  const cursor = '<span class="cursor"></span>';
+  if (term) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      term.innerHTML = lines.map((l) => l[0] + l[1]).join('\n') + cursor;
+    } else {
+      let out = '';
+      let li = 0;
+      const next = () => {
+        if (li >= lines.length) { term.innerHTML = out + cursor; return; }
+        const [pre, txt] = lines[li];
+        if (!pre) { out += txt + '\n'; li++; term.innerHTML = out; setTimeout(next, 260); return; }
+        out += pre;
+        let c = 0;
+        const type = () => {
+          if (c <= txt.length) { term.innerHTML = out + txt.slice(0, c) + cursor; c++; setTimeout(type, 55); return; }
+          out += txt + (txt ? '\n' : ''); li++; setTimeout(next, 320);
+        };
+        type();
+      };
+      next();
+    }
+  }
+</script>

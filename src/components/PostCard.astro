@@ -1,0 +1,28 @@
+---
+import { TOPICS } from '../data/topics';
+import { excerpt, formatDate, postUrl, type Post } from '../data/posts';
+
+interface Props { post: Post }
+const { post } = Astro.props;
+const topic = TOPICS[post.data.category];
+const fromLinkedIn = Boolean(post.data.linkedin);
+const searchText = [post.data.title, post.data.summary, post.data.tags.join(' '), topic.label].join(' ').toLowerCase();
+---
+<article
+  class="post"
+  style={`--c:${topic.color}`}
+  data-category={post.data.category}
+  data-source={fromLinkedIn ? 'linkedin' : 'note'}
+  data-text={searchText}
+>
+  <div class="post-meta">
+    {fromLinkedIn ? <span class="src li">● LinkedIn</span> : <span class="src">{topic.icon} {topic.short}</span>}
+    <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+  </div>
+  {post.data.tags.length > 0 && (
+    <div class="tags">{post.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
+  )}
+  <h3><a href={postUrl(post)}>{post.data.title}</a></h3>
+  <p>{excerpt(post)}</p>
+  <span class="readmore">Read post →</span>
+</article>

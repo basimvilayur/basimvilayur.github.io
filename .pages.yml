@@ -1,0 +1,58 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: src/content/posts
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      primary: title
+      fields: [title, date, category]
+      sort: date
+      order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: category
+        label: Topic
+        type: select
+        required: true
+        options:
+          values:
+            - { name: networking, label: Networking }
+            - { name: servers, label: Servers & Proxmox }
+            - { name: security, label: Security }
+            - { name: cloud, label: Cloud & Microsoft 365 }
+            - { name: odoo, label: Odoo & ERP }
+            - { name: automation, label: Automation }
+            - { name: database, label: Database & Storage }
+            - { name: interviews, label: Technical Interviews }
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: summary
+        label: Summary (shown on cards; optional)
+        type: text
+      - name: linkedin
+        label: LinkedIn post link (optional)
+        type: string
+      - name: draft
+        label: Draft (hide from website)
+        type: boolean
+        default: false
+      - name: body
+        label: Post
+        type: rich-text
+        options:
+          format: markdown

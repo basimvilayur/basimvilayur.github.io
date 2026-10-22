@@ -1,12 +1,11 @@
-"""Append one LinkedIn post (from workflow inputs in env vars) to posts.json."""
+"""Add a post already made on LinkedIn (from workflow inputs in env vars) as a website post."""
 import datetime
-import json
 import os
 import re
 import sys
 import urllib.request
 
-PATH = "posts.json"
+from postfile import existing, write_post
 
 LINKEDIN = r"^https://([a-z]+\.)?linkedin\.com/"
 
@@ -30,25 +29,18 @@ try:
 except ValueError:
     sys.exit(f"Date must be YYYY-MM-DD, got: {date}")
 
-with open(PATH, encoding="utf-8") as f:
-    posts = json.load(f)
-
-if any(p.get("url") == url for p in posts):
+if existing("linkedin", url):
     print("This post is already on the website.")
     sys.exit(0)
 
-posts.insert(0, {
-    "title": os.environ["P_TITLE"].strip(),
-    "summary": os.environ.get("P_SUMMARY", "").strip(),
-    "category": os.environ["P_CATEGORY"].strip(),
-    "tags": [t.strip() for t in os.environ.get("P_TAGS", "").split(",") if t.strip()],
-    "source": "linkedin",
-    "date": date,
-    "url": url,
-})
-
-with open(PATH, "w", encoding="utf-8") as f:
-    json.dump(posts, f, indent=2, ensure_ascii=False)
-    f.write("\n")
-
-print(f"Added: {posts[0]['title']}")
+text = os.environ.get("P_SUMMARY", "").strip()
+body = text or "I shared this on LinkedIn — read the full post and join the discussion there."
+path = write_post(
+    title=os.environ["P_TITLE"].strip(),
+    date=date,
+    category=os.environ["P_CATEGORY"].strip(),
+    body=body,
+    tags=[t.strip() for t in os.environ.get("P_TAGS", "").split(",") if t.strip()],
+    linkedin=url,
+)
+print(f"Added: {path}")

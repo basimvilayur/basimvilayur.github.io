@@ -26,6 +26,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   add:
@@ -33,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Append post to posts.json
+      - name: Add post to the website
         env:
           P_URL: ${{ inputs.url }}
           P_TITLE: ${{ inputs.title }}
@@ -47,9 +48,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add posts.json
+          git add src/content/posts
           git diff --cached --quiet && { echo "No change (already added)"; exit 0; }
           git commit -m "Add LinkedIn post: ${P_TITLE:0:60}"
           git push
+          gh workflow run deploy.yml --ref main
         env:
           P_TITLE: ${{ inputs.title }}
+          GH_TOKEN: ${{ github.token }}

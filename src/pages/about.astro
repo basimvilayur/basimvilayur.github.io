@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import Socials from '../components/Socials.astro';
+import { SITE, TOPICS, TOPIC_IDS } from '../data/topics';
+---
+<Base title="About" description="About Basim Mohammed: IT infrastructure, networking, security and automation notes, and how to get in touch.">
+  <section class="page-head">
+    <div class="glow g1"></div><div class="glow g2"></div>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>About</span></nav>
+      <h1>About me</h1>
+      <p>Hi, I'm Basim Mohammed. I write practical notes from real IT work.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="block about-grid">
+      <div class="prose">
+        <p>
+          This site is my technical knowledge base. I share simple, practical notes about networking,
+          servers, Proxmox, firewalls, Microsoft 365, Odoo, security monitoring, cloud, automation,
+          and interview preparation.
+        </p>
+        <p>
+          The notes are written for practical IT work: clear steps, real troubleshooting, security
+          planning, infrastructure design, and easy revision. Many of them start as LinkedIn posts —
+          follow me there to see new ones first.
+        </p>
+        <h2>What I write about</h2>
+        <ul>
+          {TOPIC_IDS.map((id) => <li><a href={`/topics/${id}/`}>{TOPICS[id].label}</a> — {TOPICS[id].description}</li>)}
+        </ul>
+      </div>
+
+      <aside class="card" id="contact">
+        <h3>Get in touch</h3>
+        <p style="color:var(--muted);margin:0 0 14px">For technical notes, IT guides, project discussions, or collaboration.</p>
+        <ul>
+          <li>✉️ <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+          <li>💼 <a href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li>𝕏 <a href={SITE.x} target="_blank" rel="noopener">X / Twitter</a></li>
+          <li>📘 <a href={SITE.facebook} target="_blank" rel="noopener">Facebook</a></li>
+          <li>📸 <a href={SITE.instagram} target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="cta">
+      <div class="glow g1"></div><div class="glow g2"></div>
+      <h2>Let's talk tech</h2>
+      <p>Have a question about a note, or a project in mind? Send me a message.</p>
+      <a class="btn btn-brand" href={`mailto:${SITE.email}`}>✉️ {SITE.email}</a>
+      <Socials />
+    </section>
+  </div>
+</Base>

@@ -1,4 +1,4 @@
-"""Publish a "New post" issue: optionally post it to LinkedIn, then add it to posts.json."""
+"""Publish a "New post" issue: optionally post it to LinkedIn, then add it to the website."""
 import datetime
 import json
 import os
@@ -7,10 +7,10 @@ import sys
 import urllib.error
 import urllib.request
 
-PATH = "posts.json"
+from postfile import CATEGORIES, existing, write_post
+
 # LinkedIn REST API version (YYYYMM). Each version is supported for about a year; bump it then.
 LINKEDIN_VERSION = "202609"
-CATEGORIES = {"networking", "servers", "security", "cloud", "odoo", "automation", "database", "interviews"}
 
 
 def parse_issue_form(body):
@@ -85,9 +85,7 @@ def main():
     if not title or title == "Post title here":
         sys.exit("Please give the issue a real title (it becomes the website card title).")
 
-    with open(PATH, encoding="utf-8") as f:
-        posts = json.load(f)
-    if any(p.get("issue") == issue["number"] for p in posts):
+    if existing("issue", issue["number"]):
         print("Already published; nothing to do.")
         return
 
@@ -101,24 +99,18 @@ def main():
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
             out.write(f"linkedin_url={url}\n")
 
-    summary = re.sub(r"\s+", " ", text)
-    if len(summary) > 500:
-        summary = summary[:497].rsplit(" ", 1)[0] + "…"
-
-    posts.insert(0, {
-        "title": title,
-        "summary": summary,
-        "category": category,
-        "tags": tags,
-        "source": "linkedin" if url else "note",
-        "date": datetime.date.today().isoformat(),
-        "url": url,
-        "issue": issue["number"],
-    })
-    with open(PATH, "w", encoding="utf-8") as f:
-        json.dump(posts, f, indent=2, ensure_ascii=False)
-        f.write("\n")
-    print(f"Added to website: {title}")
+    # Markdown joins single lines; a trailing double space keeps LinkedIn's line breaks.
+    body = re.sub(r"(?<!\n)\n(?!\n)", "  \n", text)
+    path = write_post(
+        title=title,
+        date=datetime.date.today().isoformat(),
+        category=category,
+        body=body,
+        tags=tags,
+        linkedin=url,
+        issue=issue["number"],
+    )
+    print(f"Added to website: {path}")
 
 
 if __name__ == "__main__":
