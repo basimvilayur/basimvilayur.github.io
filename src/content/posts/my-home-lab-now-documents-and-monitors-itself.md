@@ -8,9 +8,15 @@ tags: ["HomeLab", "Rackpad", "Proxmox", "OPNsense", "SNMP", "Automation", "Monit
 
 Over the past few days I turned a "mental map + half-finished diagram" home lab into a self-maintaining source of truth, using [Rackpad](https://github.com/Kobii-git/rackpad), an open-source, self-hosted inventory for racks, ports, cables, IPs and devices.
 
+![Diagram: Proxmox, the switch, the firewall and network scans feed a Python sync, which updates Rackpad and its monitoring with Telegram alerts](/images/posts/home-lab-rackpad/automation-flow.jpg)
+*How it works: the sources of truth are read every 15 minutes and Rackpad keeps the result.*
+
 ## Why it matters
 
 In a lab or a small office, the real risk is rarely the hardware. It's not knowing what is connected where when something breaks, or when you need to change it. An inventory that is updated by hand is out of date within a week. So the goal was simple: **the inventory has to keep itself current.**
+
+![The original hand-drawn network topology of the home lab, with all IP addresses blurred](/images/posts/home-lab-rackpad/topology-diagram-blurred.jpg)
+*Where I started: a hand-maintained topology diagram (addresses blurred). Useful, but it was already missing devices and cables.*
 
 ## What's in place now
 
@@ -21,6 +27,12 @@ In a lab or a small office, the real risk is rarely the hardware. It's not knowi
 - Wi-Fi access points, radios and SSIDs (home, guest with captive portal, extended)
 - IP assignments, DHCP scopes and service links (web UIs, DNS, VPN)
 
+![Rackpad dashboard showing devices needing attention, 46 enabled monitor targets and recent activity](/images/posts/home-lab-rackpad/rackpad-dashboard.jpg)
+*The Rackpad dashboard: what needs attention, monitor status and recent changes (sensitive details blurred).*
+
+![Rackpad Wi-Fi view with the access points, their radios and the SSIDs they broadcast](/images/posts/home-lab-rackpad/rackpad-wifi.jpg)
+*Wi-Fi: access points, radios and SSIDs (network names blurred).*
+
 ### Auto-discovery every 15 minutes
 A small Python sync runs on the Proxmox host and reads the real sources of truth:
 
@@ -29,8 +41,17 @@ A small Python sync runs on the Proxmox host and reads the real sources of truth
 - **Firewall (SNMP IF-MIB + ARP):** port up/down, uplink cables, device presence on every network, and MAC + vendor for unknown devices.
 - **Network scans:** new hosts on the server LAN are imported automatically; Wi-Fi devices wait in a review queue, already labelled with their manufacturer.
 
+![Rackpad visualizer showing the rack with the switch and firewall, the Proxmox VMs and the cable paths between them](/images/posts/home-lab-rackpad/rackpad-visualizer.jpg)
+*The topology visualizer: rack, VMs and cable paths, all generated from the discovered data.*
+
+![Rackpad cable inspector showing a cable created automatically from the switch MAC table, labelled SW1-P02 to PVEQATAR-ENO1](/images/posts/home-lab-rackpad/rackpad-auto-cable.jpg)
+*A cable the sync created from the switch's MAC table, with its printable label.*
+
 ### Monitoring
 46 health checks (ping, TCP and HTTP) cover the hypervisor, firewall, DNS, ERP, media services, internet and VPN, with **Telegram alerts** when something goes down and again when it recovers.
+
+![Rackpad monitoring page with 31 devices, 46 targets, and per-device ICMP, TCP and HTTP checks](/images/posts/home-lab-rackpad/rackpad-monitoring.jpg)
+*Monitoring: 46 targets across 31 devices.*
 
 ### Planning
 A VLAN segmentation plan (servers, trusted, IoT, guest, voice, lab, management) is documented as *planned* networks, together with a switch port map, a firewall matrix, a risk register and a pre-migration checklist. The plan lives next to the live inventory, so nothing gets out of sync.
